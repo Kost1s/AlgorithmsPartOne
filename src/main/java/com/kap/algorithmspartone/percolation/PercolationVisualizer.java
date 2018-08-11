@@ -25,7 +25,7 @@ import edu.princeton.cs.algs4.StdDraw;
 
 public class PercolationVisualizer {
 
-    // delay in miliseconds (controls animation speed)
+    // delay in milliseconds (controls animation speed)
     private static final int DELAY = 100;
 
     // draw n-by-n percolation system
