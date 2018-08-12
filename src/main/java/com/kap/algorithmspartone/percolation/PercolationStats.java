@@ -33,7 +33,7 @@ public class PercolationStats {
             while (!percolation.percolates()) {
                 int i = StdRandom.uniform(1, n + 1);
                 int j = StdRandom.uniform(1, n + 1);
-                if(!percolation.isOpen(i, j)) {
+                if (!percolation.isOpen(i, j)) {
                     percolation.open(i, j);
                     openSites++;
                 }
@@ -71,6 +71,11 @@ public class PercolationStats {
         return mean() + ((1.96 * stddev()) / Math.sqrt(experimentsNo));
     }
 
+    /**
+     * Test client
+     *
+     * @param args arguments provided
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
