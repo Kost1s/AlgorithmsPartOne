@@ -18,6 +18,7 @@ public class Percolation {
     private final int gridSideLength;
     private final int virtualTopSite;
     private final int virtualBottomSite;
+    private int openSitesCount;
 
     /**
      * Percolation class constructor.
@@ -52,6 +53,7 @@ public class Percolation {
     public void open(int row, int col) {
         validateIndices(row, col);
         openSites[row - 1][col - 1] = true;
+        openSitesCount++;
 
         if (row == 1) {
             weightedQuickUnionUF.union(getUfIndex(row, col), virtualTopSite);
@@ -103,8 +105,11 @@ public class Percolation {
         return weightedQuickUnionUF.connected(virtualTopSite, getUfIndex(row, col));
     }
 
+    /**
+     * @return number of open sites
+     */
     public int numberOfOpenSites() {
-
+        return openSitesCount;
     }
 
     /**
