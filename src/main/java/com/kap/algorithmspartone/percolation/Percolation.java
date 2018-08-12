@@ -171,7 +171,13 @@ public class Percolation {
     }
 
     private static void testSideBySideSites() {
-        Percolation p = new Percolation(3);
+        int n = 3;
+
+        StdOut.println("Grid dimensions : " + n + " * " + n);
+
+        StdOut.println(LINE_SPLIT);
+
+        Percolation p = new Percolation(n);
 
         // check and open (1, 1)
         StdOut.println("Is (1, 1) open = " + p.isOpen(1, 1));
@@ -197,7 +203,15 @@ public class Percolation {
 
         StdOut.println(LINE_SPLIT);
 
+        int siteOneCoordinates = 1;
+        int siteTwoCoordinates = 2;
+
         StdOut.println("Number of open sites is : " + p.numberOfOpenSites());
+
+        StdOut.println(LINE_SPLIT);
+
+        StdOut.println("Are (1, 1) and (1, 2) connected : " + p.weightedQuickUnionUF.connected(siteOneCoordinates,
+                                                                                               siteTwoCoordinates));
     }
 
 
