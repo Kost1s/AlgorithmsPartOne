@@ -1,5 +1,6 @@
 package com.kap.algorithmspartone.percolation;
 
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 /**
@@ -12,6 +13,8 @@ public class Percolation {
 
     private static final String SITES_INPUT_SUB_OR_EQUAL_ZERO = "Number of sites provided as an input is invalid." +
                                                                 "Valid input should be an integer biggen than zero";
+
+    private static final String LINE_SPLIT = "========================";
 
     private final WeightedQuickUnionUF weightedQuickUnionUF;
     private boolean[][] openSites;
@@ -157,5 +160,45 @@ public class Percolation {
     private int getUfIndex(int row, int col) {
         return (gridSideLength * (row - 1)) + col;
     }
+
+    /**
+     * Test client
+     *
+     * @param args arguments array
+     */
+    public static void main(String[] args) {
+        testSideBySideSites();
+    }
+
+    private static void testSideBySideSites() {
+        Percolation p = new Percolation(3);
+
+        // check and open (1, 1)
+        StdOut.println("Is (1, 1) open = " + p.isOpen(1, 1));
+        StdOut.println("Open (1, 1)");
+        p.open(1, 1);
+        StdOut.println("Is (1, 1) open = " + p.isOpen(1, 1));
+
+        StdOut.println(LINE_SPLIT);
+
+        // check and open (1, 2)
+        StdOut.println("Is (1, 2) open = " + p.isOpen(1, 2));
+        StdOut.println("Open (1, 2)");
+        p.open(1, 2);
+        StdOut.println("Is (1, 2) open = " + p.isOpen(1, 2));
+
+        StdOut.println(LINE_SPLIT);
+
+        StdOut.println("Is (1, 1) full = " + p.isFull(1, 1));
+
+        StdOut.println(LINE_SPLIT);
+
+        StdOut.println("Is (1, 2) full = " + p.isFull(1, 2));
+
+        StdOut.println(LINE_SPLIT);
+
+        StdOut.println("Number of open sites is : " + p.numberOfOpenSites());
+    }
+
 
 }
