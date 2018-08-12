@@ -43,9 +43,39 @@ public class Percolation {
         openSites = new boolean[gridSideLength][gridSideLength];
     }
 
+    /**
+     * Opens the site provided.
+     *
+     * @param row site row index provided
+     * @param col site column index provided
+     */
     public void open(int row, int col) {
         validateIndices(row, col);
+        openSites[row - 1][col - 1] = true;
 
+        if (row == 1) {
+            weightedQuickUnionUF.union(getUfIndex(row, col), virtualTopSite);
+        }
+
+        if (row == gridSideLength) {
+            weightedQuickUnionUF.union(getUfIndex(row, col), virtualBottomSite);
+        }
+
+        if ((col > 1) && isOpen(row, col - 1)) {
+            weightedQuickUnionUF.union(getUfIndex(row, col), getUfIndex(row, col - 1));
+        }
+
+        if ((col < gridSideLength) && isOpen(row, col + 1)) {
+            weightedQuickUnionUF.union(getUfIndex(row, col), getUfIndex(row, col + 1));
+        }
+
+        if ((row > 1) && isOpen(row - 1, col)) {
+            weightedQuickUnionUF.union(getUfIndex(row, col), getUfIndex(row - 1, col));
+        }
+
+        if ((row < gridSideLength) && isOpen(row + 1, col)) {
+            weightedQuickUnionUF.union(getUfIndex(row, col), getUfIndex(row + 1, col));
+        }
     }
 
     /**
