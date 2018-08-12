@@ -43,8 +43,20 @@ public class Percolation {
         openSites = new boolean[gridSideLength][gridSideLength];
     }
 
-    public boolean isOpen(int row, int col) {
+    public void open(int row, int col) {
+        validateIndices(row, col);
 
+    }
+
+    /**
+     * @param row site row index provided
+     * @param col site column index provided
+     *
+     * @return true if site provided is open. otherwise false.
+     */
+    public boolean isOpen(int row, int col) {
+        validateIndices(row, col);
+        return openSites[row - 1][col - 1];
     }
 
     /**
