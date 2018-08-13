@@ -1,19 +1,15 @@
-package com.kap.algorithmspartone.percolation;
-
-import edu.princeton.cs.algs4.*;
-
-import java.util.Scanner;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdStats;
+import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * @author Konstantinos Antoniou
  */
 public class PercolationStats {
 
-    private int experimentsNo;
-    private int openSites;
-    private double percolationThreshold;
-    private double[] thresholds;
-    private Percolation percolation;
+    private final int experimentsNo;
+    private final double[] thresholds;
+    private static final double STDDEV = 1.96;
 
     /**
      * Constructor responsible for performing trials independent experiments on an n-by-n grid
@@ -28,8 +24,8 @@ public class PercolationStats {
         experimentsNo = trials;
         thresholds = new double[experimentsNo];
         for (int expNo = 0; expNo < experimentsNo; expNo++) {
-            percolation = new Percolation(n);
-            openSites = 0;
+            final Percolation percolation = new Percolation(n);
+            int openSites = 0;
             while (!percolation.percolates()) {
                 int i = StdRandom.uniform(1, n + 1);
                 int j = StdRandom.uniform(1, n + 1);
@@ -38,7 +34,7 @@ public class PercolationStats {
                     openSites++;
                 }
             }
-            percolationThreshold = (double) openSites / (n * n);
+            final double percolationThreshold = (double) openSites / (n * n);
             thresholds[expNo] = percolationThreshold;
         }
     }
@@ -61,14 +57,14 @@ public class PercolationStats {
      * @return low  endpoint of 95% confidence interval
      */
     public double confidenceLo() {
-        return mean() - ((1.96 * stddev()) / Math.sqrt(experimentsNo));
+        return mean() - ((STDDEV * stddev()) / Math.sqrt(experimentsNo));
     }
 
     /**
      * @return high endpoint of 95% confidence interval
      */
     public double confidenceHi() {
-        return mean() + ((1.96 * stddev()) / Math.sqrt(experimentsNo));
+        return mean() + ((STDDEV * stddev()) / Math.sqrt(experimentsNo));
     }
 
     /**
@@ -77,9 +73,8 @@ public class PercolationStats {
      * @param args arguments provided
      */
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int trials = sc.nextInt();
+        int n = Integer.parseInt(args[0]);
+        int trials = Integer.parseInt(args[1]);
         PercolationStats ps = new PercolationStats(n, trials);
 
         StdOut.println("mean                    = " + ps.mean());
