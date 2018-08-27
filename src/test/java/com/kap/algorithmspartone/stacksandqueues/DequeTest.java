@@ -51,4 +51,28 @@ public class DequeTest {
         assertEquals(0, deque.size());
     }
 
+    @Test
+    public void testIteratorAddFirst() {
+        Deque<Integer> deque = new Deque<Integer>();
+        deque.addFirst(2);
+        deque.addFirst(3);
+        deque.addFirst(5);
+
+        for(Object item : deque) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void testIteratorAddLast() {
+        Deque<Integer> deque = new Deque<Integer>();
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.addLast(5);
+
+        for(Object item : deque) {
+            System.out.println(item);
+        }
+    }
+
 }

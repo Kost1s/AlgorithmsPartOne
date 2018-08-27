@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @author Konstantinos Antoniou
  */
-public class Deque<Item> {
+public class Deque<Item> implements Iterable<Item> {
 
     private Node head;
     private Node tail;
@@ -100,7 +100,34 @@ public class Deque<Item> {
         return item;
     }
 
-    static class Node<Item> {
+    public Iterator<Item> iterator() {
+        return new ListIterator();
+    }
+
+    private class ListIterator implements Iterator<Item> {
+        private Node current = head;
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @SuppressWarnings("unchecked")
+        public Item next() {
+            if(size == 0) {
+                throw new NoSuchElementException();
+            } else {
+                Item item = (Item) current.item;
+                current = current.next;
+                return item;
+            }
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    private class Node<Item> {
         Item item;
         Node next;
         Node prev;
