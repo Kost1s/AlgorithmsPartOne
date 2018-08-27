@@ -1,7 +1,9 @@
+package com.kap.algorithmspartone.percolation;
+
 /******************************************************************************
- *  Compilation:  javac InteractivePercolationVisualizer.java
- *  Execution:    java InteractivePercolationVisualizer n
- *  Dependencies: PercolationVisualizer.java Percolation.java
+ *  Compilation:  javac com.kap.algorithmspartone.percolation.InteractivePercolationVisualizer.java
+ *  Execution:    java com.kap.algorithmspartone.percolation.InteractivePercolationVisualizer n
+ *  Dependencies: com.kap.algorithmspartone.percolation.PercolationVisualizer.java com.kap.algorithmspartone.percolation.Percolation.java
  *                StdDraw.java StdOut.java
  *
  *  This program takes the grid size n as a command-line argument.

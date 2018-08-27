@@ -1,3 +1,5 @@
+package com.kap.algorithmspartone.percolation;
+
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
@@ -22,7 +24,7 @@ public class Percolation {
     private int openSitesCount;
 
     /**
-     * Percolation class constructor.
+     * com.kap.algorithmspartone.percolation.Percolation class constructor.
      * <p>
      * Checks whether the grid side length provided is valid (n > 0). Otherwise, throws IllegalArgumentException.
      * <p>
