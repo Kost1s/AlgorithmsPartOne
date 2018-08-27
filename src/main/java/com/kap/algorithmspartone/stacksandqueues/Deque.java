@@ -13,6 +13,7 @@ public class Deque<Item> {
     private int size;
 
     public Deque() {
+        // Intentionally Blank
     }
 
     public boolean isEmpty() {
