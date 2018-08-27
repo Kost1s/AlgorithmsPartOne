@@ -113,7 +113,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         @SuppressWarnings("unchecked")
         public Item next() {
-            if(size == 0) {
+            if(!hasNext()) {
                 throw new NoSuchElementException();
             } else {
                 Item item = (Item) current.item;
