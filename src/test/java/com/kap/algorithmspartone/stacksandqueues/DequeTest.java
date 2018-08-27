@@ -3,6 +3,7 @@ package com.kap.algorithmspartone.stacksandqueues;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * @author Konstantinos Antoniou
@@ -37,6 +38,7 @@ public class DequeTest {
         assertEquals(3, (int) deque.removeFirst());
         assertEquals(2, (int) deque.removeFirst());
         assertEquals(0, deque.size());
+        assertTrue(deque.isEmpty());
     }
 
     @Test
@@ -49,6 +51,7 @@ public class DequeTest {
         assertEquals(3, (int) deque.removeLast());
         assertEquals(2, (int) deque.removeLast());
         assertEquals(0, deque.size());
+        assertTrue(deque.isEmpty());
     }
 
     @Test
