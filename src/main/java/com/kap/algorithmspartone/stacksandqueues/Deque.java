@@ -88,13 +88,12 @@ public class Deque<Item> {
         }
 
         Item item = (Item) tail.item;
-        Node oldTail = tail;
-        oldTail.prev = null;
-
         tail = tail.prev;
 
         if(tail == null) {
-            head = tail;
+            head = null;
+        } else {
+            tail.next = null;
         }
 
         size--;
