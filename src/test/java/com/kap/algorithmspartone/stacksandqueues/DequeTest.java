@@ -37,7 +37,7 @@ public class DequeTest {
         assertEquals(5, (int) deque.removeFirst());
         assertEquals(3, (int) deque.removeFirst());
         assertEquals(2, (int) deque.removeFirst());
-        assertEquals(0, deque.size());
+         assertEquals(0, deque.size());
         assertTrue(deque.isEmpty());
     }
 
