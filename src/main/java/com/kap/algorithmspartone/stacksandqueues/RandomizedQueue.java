@@ -99,7 +99,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private int getRandomIndex() {
-        return StdRandom.uniform(0, size-1);
+        return StdRandom.uniform(size);
     }
 
 }
