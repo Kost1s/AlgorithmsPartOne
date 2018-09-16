@@ -42,7 +42,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         }
 
-        int index = getRandomIndex();
+        int index = getRandomIndex(size);
         Item item = randomQueue[index];
         randomQueue[index] = randomQueue[size - 1];
         randomQueue[size - 1] = null;
@@ -60,7 +60,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         }
 
-        return randomQueue[getRandomIndex()];
+        return randomQueue[getRandomIndex(size)];
     }
 
     private void resize(int capacity) {
@@ -77,30 +77,44 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return copy;
     }
 
+    private int getRandomIndex(int arraySize) {
+        return StdRandom.uniform(arraySize);
+    }
+
     public Iterator<Item> iterator() {
         return new RandomizedQueueIterator();
     }
 
     private class RandomizedQueueIterator implements Iterator<Item> {
+        private final Item[] iteratorArray;
+        private int iteratorArraySize;
+
+        private RandomizedQueueIterator() {
+            iteratorArraySize = size;
+            iteratorArray = arrayCopy(size);
+        }
+
         public boolean hasNext() {
-            return !isEmpty();
+            return iteratorArraySize > 0;
         }
 
         public Item next() {
             if(!hasNext()) {
                 throw new NoSuchElementException();
-            } else {
-                return sample();
             }
+
+            int index = getRandomIndex(iteratorArraySize);
+            Item item = iteratorArray[index];
+            iteratorArray[index] = iteratorArray[iteratorArraySize - 1];
+            iteratorArray[iteratorArraySize - 1] = null;
+            iteratorArraySize--;
+
+            return item;
         }
 
         public void remove() {
             throw new UnsupportedOperationException();
         }
-    }
-
-    private int getRandomIndex() {
-        return StdRandom.uniform(size);
     }
 
 }
