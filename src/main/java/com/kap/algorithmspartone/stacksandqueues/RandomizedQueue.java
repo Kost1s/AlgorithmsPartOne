@@ -44,7 +44,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         int index = getRandomIndex();
         Item item = randomQueue[index];
-        randomQueue[index] = null;
+        randomQueue[index] = randomQueue[size - 1];
+        randomQueue[size - 1] = null;
         size--;
 
         if ((size > 0) && (size == (randomQueue.length / 4))) {
@@ -77,10 +78,10 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new ListIterator();
+        return new RandomizedQueueIterator();
     }
 
-    private class ListIterator implements Iterator<Item> {
+    private class RandomizedQueueIterator implements Iterator<Item> {
         public boolean hasNext() {
             return !isEmpty();
         }
