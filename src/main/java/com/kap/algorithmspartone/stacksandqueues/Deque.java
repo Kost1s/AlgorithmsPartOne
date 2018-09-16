@@ -101,10 +101,10 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new ListIterator();
+        return new DequeIterator();
     }
 
-    private class ListIterator implements Iterator<Item> {
+    private class DequeIterator implements Iterator<Item> {
         private Node current = head;
 
         public boolean hasNext() {
