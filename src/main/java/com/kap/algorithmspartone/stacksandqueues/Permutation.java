@@ -10,7 +10,7 @@ import edu.princeton.cs.algs4.StdOut;
 public class Permutation {
 
     public static void main(String[] args) {
-        RandomizedQueue randomizedQueue = new RandomizedQueue();
+        RandomizedQueue<String> randomizedQueue = new RandomizedQueue<String>();
 
         int stringsNo = StdIn.readInt();
         In in = new In(args[0]);
@@ -19,7 +19,7 @@ public class Permutation {
             randomizedQueue.enqueue(item);
         }
 
-        for(int i = 0; i < stringsNo; i++) {
+        for (int i = 0; i < stringsNo; i++) {
             StdOut.println(randomizedQueue.dequeue());
         }
     }

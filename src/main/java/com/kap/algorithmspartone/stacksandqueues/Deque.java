@@ -1,6 +1,5 @@
 package com.kap.algorithmspartone.stacksandqueues;
 
-
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -9,8 +8,8 @@ import java.util.NoSuchElementException;
  */
 public class Deque<Item> implements Iterable<Item> {
 
-    private Node head;
-    private Node tail;
+    private Node<Item> head;
+    private Node<Item> tail;
 
     private int size;
 
@@ -37,7 +36,6 @@ public class Deque<Item> implements Iterable<Item> {
         return size;
     }
 
-    @SuppressWarnings("unchecked")
     /**
      * Adds an item to the front of the deque
      */
@@ -46,7 +44,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new IllegalArgumentException();
         }
 
-        Node newHead = new Node(item);
+        Node<Item> newHead = new Node<Item>(item);
 
         if (isEmpty()) {
             head = newHead;
@@ -62,13 +60,12 @@ public class Deque<Item> implements Iterable<Item> {
     /**
      * Adds an item at the end of the deque
      */
-    @SuppressWarnings("unchecked")
     public void addLast(Item item) {
         if (item == null) {
             throw new IllegalArgumentException();
         }
 
-        Node newTail = new Node(item);
+        Node<Item> newTail = new Node<Item>(item);
 
         if (isEmpty()) {
             tail = newTail;
@@ -84,13 +81,12 @@ public class Deque<Item> implements Iterable<Item> {
     /**
      * @return the item from the front of the deque and also removes it from the deque
      */
-    @SuppressWarnings("unchecked")
     public Item removeFirst() {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
 
-        Item item = (Item) head.item;
+        Item item = head.item;
         head = head.next;
 
         if (isEmpty()) {
@@ -106,13 +102,12 @@ public class Deque<Item> implements Iterable<Item> {
     /**
      * @return the item from the end of the deque and also removes it from the deque
      */
-    @SuppressWarnings("unchecked")
     public Item removeLast() {
         if (isEmpty()) {
             throw new NoSuchElementException();
         }
 
-        Item item = (Item) tail.item;
+        Item item = tail.item;
         tail = tail.prev;
 
         if (tail == null) {
@@ -133,7 +128,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class DequeIterator implements Iterator<Item> {
-        private Node current = head;
+        private Node<Item> current = head;
 
         /**
          * Checks whether there is a next element to return or not
@@ -148,12 +143,11 @@ public class Deque<Item> implements Iterable<Item> {
          * @return the next element in the deque during an iteration of the elements if it exists. otherwise throws
          * a NoSuchElementException.
          */
-        @SuppressWarnings("unchecked")
         public Item next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                Item item = (Item) current.item;
+                Item item = current.item;
                 current = current.next;
                 return item;
             }
@@ -169,8 +163,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     private class Node<Item> {
         Item item;
-        Node next;
-        Node prev;
+        Node<Item> next;
+        Node<Item> prev;
 
         /**
          * Constructs a node element in order to be put in the linked-list which is used to implement the deque data
