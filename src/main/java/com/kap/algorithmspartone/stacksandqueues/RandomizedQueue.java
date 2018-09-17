@@ -43,10 +43,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         }
 
-        int index = getRandomIndex(size);
-        Item item = randomQueue[index];
-        randomQueue[index] = randomQueue[size - 1];
-        randomQueue[size - 1] = null;
+        Item item = getAndRemoveRandomItem(randomQueue, size);
         size--;
 
         if ((size > 0) && (size == (randomQueue.length / 4))) {
@@ -82,6 +79,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return StdRandom.uniform(arraySize);
     }
 
+    private Item getAndRemoveRandomItem(Item[] array, int arraySize) {
+        int index = getRandomIndex(arraySize);
+        Item item = array[index];
+        array[index] = array[arraySize - 1];
+        array[arraySize - 1] = null;
+        return item;
+    }
+
     public Iterator<Item> iterator() {
         return new RandomizedQueueIterator();
     }
@@ -104,10 +109,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
                 throw new NoSuchElementException();
             }
 
-            int index = getRandomIndex(iteratorArraySize);
-            Item item = iteratorArray[index];
-            iteratorArray[index] = iteratorArray[iteratorArraySize - 1];
-            iteratorArray[iteratorArraySize - 1] = null;
+            Item item = getAndRemoveRandomItem(iteratorArray, iteratorArraySize);
             iteratorArraySize--;
 
             return item;
