@@ -85,55 +85,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     /**
-     * Resizes a given array based on the capacity provided.
-     *
-     * @param capacity target length of the array to be resized.
-     */
-    private void resize(int capacity) {
-        randomQueue = arrayCopy(capacity);
-    }
-
-    /**
-     * Performs a copy of the array used to implement the queue using the capacity provided.
-     *
-     * @param capacity target length of the result array after the copy operation
-     * @return an array produced from the current original array used to implement the queue structure resized to the
-     * capacity specified
-     */
-    private Item[] arrayCopy(int capacity) {
-        Item[] copy = (Item[]) new Object[capacity];
-
-        for (int i = 0; i < size; i++) {
-            copy[i] = randomQueue[i];
-        }
-
-        return copy;
-    }
-
-    /**
-     * @param arraySize size of the array from which a random index has to be drawn
-     * @return a random index based on the array size specified
-     */
-    private int getRandomIndex(int arraySize) {
-        return StdRandom.uniform(arraySize);
-    }
-
-    /**
-     * Helper method to get and subsequently remove a random element from the array specified.
-     *
-     * @param array     array from which the random element has to be drawn
-     * @param arraySize array size for the array specified
-     * @return an random item from the array specified
-     */
-    private Item getAndRemoveRandomItem(Item[] array, int arraySize) {
-        int index = getRandomIndex(arraySize);
-        Item item = array[index];
-        array[index] = array[arraySize - 1];
-        array[arraySize - 1] = null;
-        return item;
-    }
-
-    /**
      * @return an independent iterator over the queue items in random order
      */
     public Iterator<Item> iterator() {
@@ -181,6 +132,55 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         public void remove() {
             throw new UnsupportedOperationException();
         }
+    }
+
+    /**
+     * Resizes a given array based on the capacity provided.
+     *
+     * @param capacity target length of the array to be resized.
+     */
+    private void resize(int capacity) {
+        randomQueue = arrayCopy(capacity);
+    }
+
+    /**
+     * Performs a copy of the array used to implement the queue using the capacity provided.
+     *
+     * @param capacity target length of the result array after the copy operation
+     * @return an array produced from the current original array used to implement the queue structure resized to the
+     * capacity specified
+     */
+    private Item[] arrayCopy(int capacity) {
+        Item[] copy = (Item[]) new Object[capacity];
+
+        for (int i = 0; i < size; i++) {
+            copy[i] = randomQueue[i];
+        }
+
+        return copy;
+    }
+
+    /**
+     * @param arraySize size of the array from which a random index has to be drawn
+     * @return a random index based on the array size specified
+     */
+    private int getRandomIndex(int arraySize) {
+        return StdRandom.uniform(arraySize);
+    }
+
+    /**
+     * Helper method to get and subsequently remove a random element from the array specified.
+     *
+     * @param array     array from which the random element has to be drawn
+     * @param arraySize array size for the array specified
+     * @return an random item from the array specified
+     */
+    private Item getAndRemoveRandomItem(Item[] array, int arraySize) {
+        int index = getRandomIndex(arraySize);
+        Item item = array[index];
+        array[index] = array[arraySize - 1];
+        array[arraySize - 1] = null;
+        return item;
     }
 
 }
