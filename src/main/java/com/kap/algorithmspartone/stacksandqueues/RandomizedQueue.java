@@ -108,6 +108,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
          *
          * @return true if there is a next item or false otherwise.
          */
+        @Override
         public boolean hasNext() {
             return iteratorArraySize > 0;
         }
@@ -115,6 +116,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         /**
          * @return the next item in the iteration sequence if there is a next one to return
          */
+        @Override
         public Item next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -129,6 +131,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         /**
          * This method is not supported in the scope of this exercise.
          */
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }

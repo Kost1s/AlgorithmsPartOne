@@ -135,6 +135,7 @@ public class Deque<Item> implements Iterable<Item> {
          *
          * @return true if there is next element or false otherwise
          */
+        @Override
         public boolean hasNext() {
             return current != null;
         }
@@ -143,6 +144,7 @@ public class Deque<Item> implements Iterable<Item> {
          * @return the next element in the deque during an iteration of the elements if it exists. otherwise throws
          * a NoSuchElementException.
          */
+        @Override
         public Item next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -156,6 +158,7 @@ public class Deque<Item> implements Iterable<Item> {
         /**
          * this method is not supported for this exercise
          */
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
