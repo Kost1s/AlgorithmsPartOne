@@ -113,12 +113,12 @@ public class Point implements Comparable<Point> {
         public int compare(Point a, Point b) {
 
             // vertical line segments
-            if ((slopeTo(a) == Double.POSITIVE_INFINITY) || (slopeTo(b) == Double.POSITIVE_INFINITY)) {
+            if ((slopeTo(a) == Double.POSITIVE_INFINITY) && (slopeTo(b) == Double.POSITIVE_INFINITY)) {
                 return (int) Double.POSITIVE_INFINITY;
             }
 
             // horizontal line segments
-            if ((slopeTo(a) == Double.NEGATIVE_INFINITY) || (slopeTo(b) == Double.NEGATIVE_INFINITY)) {
+            if ((slopeTo(a) == Double.NEGATIVE_INFINITY) && (slopeTo(b) == Double.NEGATIVE_INFINITY)) {
                 return (int) Double.NEGATIVE_INFINITY;
             }
 
