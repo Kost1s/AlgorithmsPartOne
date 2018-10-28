@@ -39,7 +39,17 @@ public class BruteCollinearPointsTest {
     public void testInputSix() {
         BruteCollinearPoints collinearPoints = new BruteCollinearPoints(inputSix);
         LineSegment[] segments = collinearPoints.segments();
-        assertEquals(collinearPoints.numberOfSegments(), 1);
+        assertEquals(1, collinearPoints.numberOfSegments());
+        for(LineSegment segment : segments) {
+            StdOut.println(segment);
+        }
+    }
+
+    @Test
+    public void testInputEight() {
+        BruteCollinearPoints collinearPoints = new BruteCollinearPoints(inputEight);
+        LineSegment[] segments = collinearPoints.segments();
+        assertEquals(2, collinearPoints.numberOfSegments());
         for(LineSegment segment : segments) {
             StdOut.println(segment);
         }
