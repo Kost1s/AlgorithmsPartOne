@@ -34,31 +34,32 @@ public class BruteCollinearPoints {
         int j;
         double slope;
         for (int i = 0; i < points.length; i++) {
-            if((i + 1) == points.length) {
+            if ((i + 1) == points.length) {
                 break;
             }
 
-            checkPointsValidity(points[i], points[i + 1]);
+            for (int k = i + 1; k < points.length; k++) {
+                checkPointsValidity(points[i], points[k]);
+                slope = points[i].slopeTo(points[k]);
 
-            slope = points[i].slopeTo(points[i + 1]);
-            j = i + 2;
+                j = k + 1;
 
-            equalSlopes = 0;
-            while ((equalSlopes < 2) && (j < points.length)) {
-                if (points[i].slopeTo(points[j]) == slope) {
-                    equalSlopes++;
-                } else {
-                    j = points.length;
+                equalSlopes = 0;
+                while ((equalSlopes < 2) && (j < points.length)) {
+
+                    if (points[i].slopeTo(points[j]) == slope) {
+                        equalSlopes++;
+                    }
+
+                    if (equalSlopes == 2) {
+                        lineSegments.add(new LineSegment(points[i], points[j]));
+                        numberOfSegments++;
+                        j = points.length;
+                        k = points.length;
+                    }
+
+                    j++;
                 }
-
-                if (equalSlopes == 2) {
-                    lineSegments.add(new LineSegment(points[i], points[j]));
-                    numberOfSegments++;
-                    i = j;
-                    j = points.length;
-                }
-
-                j++;
             }
         }
 
