@@ -1,17 +1,85 @@
 package com.kap.algorithmspartone.collinearpoints;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * @author Konstantinos Antoniou
  */
 public class BruteCollinearPoints {
 
-    private Point[] points;
+    private static final String CONSTRUCTOR_ARGUMENT_IS_NULL = "Constructor argument is null.";
+    private static final String REPEATED_POINTS_FOUND = "Repeated points are found.";
+    private static final String NULL_POINT_FOUND = "Null point found.";
+
+    private final Point[] points;
+    private int numberOfSegments = 0;
 
     public BruteCollinearPoints(final Point[] points) {
+        if (points == null) {
+            throw new IllegalArgumentException(CONSTRUCTOR_ARGUMENT_IS_NULL);
+        }
         this.points = points;
     }
 
-    private void checkPointsValidity() {
+    /**
+     * @return the line segments array created from the point given
+     */
+    public LineSegment[] segments() {
+        ArrayList<LineSegment> lineSegments = new ArrayList<>();
 
+        Arrays.sort(points);
+
+        int equalSlopes;
+        int j;
+        double slope;
+        for (int i = 0; i < points.length; i++) {
+            if((i + 1) == points.length) {
+                break;
+            }
+
+            checkPointsValidity(points[i], points[i + 1]);
+
+            slope = points[i].slopeTo(points[i + 1]);
+            j = i + 2;
+
+            equalSlopes = 0;
+            while ((equalSlopes < 2) && (j < points.length)) {
+                if (points[i].slopeTo(points[j]) == slope) {
+                    equalSlopes++;
+                } else {
+                    j = points.length;
+                }
+
+                if (equalSlopes == 2) {
+                    lineSegments.add(new LineSegment(points[i], points[j]));
+                    numberOfSegments++;
+                    i = j;
+                    j = points.length;
+                }
+
+                j++;
+            }
+        }
+
+        LineSegment[] segments = new LineSegment[lineSegments.size()];
+        return lineSegments.toArray(segments);
+    }
+
+    /**
+     * @return the number of line segments created from the points given
+     */
+    public int numberOfSegments() {
+        return numberOfSegments;
+    }
+
+    private void checkPointsValidity(Point p1, Point p2) {
+        if ((p1 == null) || (p2 == null)) {
+            throw new IllegalArgumentException(NULL_POINT_FOUND);
+        }
+
+        if (p1.compareTo(p2) == 0) {
+            throw new IllegalArgumentException(REPEATED_POINTS_FOUND);
+        }
     }
 }
