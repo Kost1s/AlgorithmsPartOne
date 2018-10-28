@@ -11,19 +11,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class BruteCollinearPointsTest {
 
-    private Point[] inputSix;
     private Point[] inputEight;
 
     @Before
     public void setUp() {
-        inputSix = new Point[6];
-        inputSix[0] = new Point(19000 ,10000);
-        inputSix[1] = new Point(18000 ,10000);
-        inputSix[2] = new Point(32000 ,10000);
-        inputSix[3] = new Point(21000 ,10000);
-        inputSix[4] = new Point(1234 ,5678);
-        inputSix[5] = new Point(14000 ,10000);
-
         inputEight = new Point[8];
         inputEight[0] = new Point(10000 ,0);
         inputEight[1] = new Point(0 ,10000);
@@ -33,16 +24,6 @@ public class BruteCollinearPointsTest {
         inputEight[5] = new Point(3000 ,4000);
         inputEight[6] = new Point(14000 ,15000);
         inputEight[7] = new Point(6000 ,7000);
-    }
-
-    @Test
-    public void testInputSix() {
-        BruteCollinearPoints collinearPoints = new BruteCollinearPoints(inputSix);
-        LineSegment[] segments = collinearPoints.segments();
-        assertEquals(1, collinearPoints.numberOfSegments());
-        for(LineSegment segment : segments) {
-            StdOut.println(segment);
-        }
     }
 
     @Test
