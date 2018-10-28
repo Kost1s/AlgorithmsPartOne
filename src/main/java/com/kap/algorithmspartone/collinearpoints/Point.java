@@ -69,7 +69,12 @@ public class Point implements Comparable<Point> {
 
         // horizontal line segment
         if (y == that.y) {
-            return Double.NEGATIVE_INFINITY;
+            return +0.0;
+        }
+
+        // negative infinity
+        if(compareTo(that) == 0) {
+           return Double.NEGATIVE_INFINITY;
         }
 
         return ((double) (that.y - y)) / (that.x - x);
@@ -117,9 +122,14 @@ public class Point implements Comparable<Point> {
                 return (int) Double.POSITIVE_INFINITY;
             }
 
-            // horizontal line segments
+            // negative infinity
             if ((slopeTo(a) == Double.NEGATIVE_INFINITY) && (slopeTo(b) == Double.NEGATIVE_INFINITY)) {
                 return (int) Double.NEGATIVE_INFINITY;
+            }
+
+            // horizontal line segments
+            if ((slopeTo(a) == 0.0) && (slopeTo(b) == 0.0)) {
+                return (int) 0.0;
             }
 
             return (int) ((int) slopeTo(a) - slopeTo(b));
