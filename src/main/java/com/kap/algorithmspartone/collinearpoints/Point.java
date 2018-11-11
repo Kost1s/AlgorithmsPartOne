@@ -52,12 +52,12 @@ public class Point implements Comparable<Point> {
     public double slopeTo(Point that) {
 
         // vertical line segment
-        if (x == that.x) {
+        if ((x == that.x) && (compareTo(that) != 0)) {
             return Double.POSITIVE_INFINITY;
         }
 
         // horizontal line segment
-        if (y == that.y) {
+        if ((y == that.y) && (compareTo(that) != 0)) {
             return +0.0;
         }
 
