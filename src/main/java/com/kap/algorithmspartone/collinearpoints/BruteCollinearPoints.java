@@ -16,9 +16,7 @@ public class BruteCollinearPoints {
     private int numberOfSegments = 0;
 
     public BruteCollinearPoints(final Point[] points) {
-        if (points == null) {
-            throw new IllegalArgumentException(CONSTRUCTOR_ARGUMENT_IS_NULL);
-        }
+        checkPointsValidity(points);
         this.points = points;
     }
 
@@ -74,13 +72,23 @@ public class BruteCollinearPoints {
         return numberOfSegments;
     }
 
-    private void checkPointsValidity(Point p1, Point p2) {
-        if ((p1 == null) || (p2 == null)) {
+    private void checkPointsValidity(Point[] points) {
+        if (points == null) {
+            throw new IllegalArgumentException(CONSTRUCTOR_ARGUMENT_IS_NULL);
+        }
+
+        if(points[0] == null) {
             throw new IllegalArgumentException(NULL_POINT_FOUND);
         }
 
-        if (p1.compareTo(p2) == 0) {
-            throw new IllegalArgumentException(REPEATED_POINTS_FOUND);
+        for(int i = 1; i < points.length; i++) {
+            if (points[i] == null) {
+                throw new IllegalArgumentException(NULL_POINT_FOUND);
+            }
+
+            if (points[i].compareTo(points[i-1]) == 0) {
+               throw new IllegalArgumentException(REPEATED_POINTS_FOUND);
+           }
         }
     }
 }
