@@ -73,7 +73,7 @@ public class Point implements Comparable<Point> {
         }
 
         // negative infinity
-        if(compareTo(that) == 0) {
+        if (compareTo(that) == 0) {
            return Double.NEGATIVE_INFINITY;
         }
 
