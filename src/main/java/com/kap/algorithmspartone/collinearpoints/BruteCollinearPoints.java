@@ -37,7 +37,6 @@ public class BruteCollinearPoints {
             }
 
             for (int k = i + 1; k < points.length; k++) {
-                checkPointsValidity(points[i], points[k]);
                 slope = points[i].slopeTo(points[k]);
 
                 j = k + 1;
