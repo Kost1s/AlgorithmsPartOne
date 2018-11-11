@@ -9,9 +9,6 @@ import java.util.Comparator;
  */
 public class Point implements Comparable<Point> {
 
-    private static final String COORDINATE_LESS_THAN_ZERO = "Coordinate cannot be less than zero";
-    private static final String COORDINATE_MORE_THAN_APPROVED = "Coordinate cannot be more than 32767";
-
     private final int x;     // x-coordinate of this point
     private final int y;     // y-coordinate of this point
 
@@ -22,14 +19,6 @@ public class Point implements Comparable<Point> {
      * @param y the <em>y</em>-coordinate of the point
      */
     public Point(int x, int y) {
-        if ((x < 0) || (y < 0)) {
-            throw new IllegalArgumentException(COORDINATE_LESS_THAN_ZERO);
-        }
-
-        if ((x > 32767) || (y > 32767)) {
-            throw new IllegalArgumentException(COORDINATE_MORE_THAN_APPROVED);
-        }
-
         this.x = x;
         this.y = y;
     }
