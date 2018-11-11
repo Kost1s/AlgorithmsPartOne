@@ -105,23 +105,7 @@ public class Point implements Comparable<Point> {
 
         @Override
         public int compare(Point a, Point b) {
-
-            // vertical line segments
-            if ((slopeTo(a) == Double.POSITIVE_INFINITY) && (slopeTo(b) == Double.POSITIVE_INFINITY)) {
-                return (int) Double.POSITIVE_INFINITY;
-            }
-
-            // negative infinity
-            if ((slopeTo(a) == Double.NEGATIVE_INFINITY) && (slopeTo(b) == Double.NEGATIVE_INFINITY)) {
-                return (int) Double.NEGATIVE_INFINITY;
-            }
-
-            // horizontal line segments
-            if ((slopeTo(a) == 0.0) && (slopeTo(b) == 0.0)) {
-                return (int) 0.0;
-            }
-
-            return (int) ((int) slopeTo(a) - slopeTo(b));
+            return Double.compare(slopeTo(a), slopeTo(b));
         }
     }
 
