@@ -76,6 +76,8 @@ public class BruteCollinearPoints {
             throw new IllegalArgumentException(CONSTRUCTOR_ARGUMENT_IS_NULL);
         }
 
+        Arrays.sort(points);
+
         if(points[0] == null) {
             throw new IllegalArgumentException(NULL_POINT_FOUND);
         }
