@@ -78,18 +78,18 @@ public class BruteCollinearPoints {
 
         Arrays.sort(points);
 
-        if(points[0] == null) {
+        if (points[0] == null) {
             throw new IllegalArgumentException(NULL_POINT_FOUND);
         }
 
-        for(int i = 1; i < points.length; i++) {
+        for (int i = 1; i < points.length; i++) {
             if (points[i] == null) {
                 throw new IllegalArgumentException(NULL_POINT_FOUND);
             }
 
-            if (points[i].compareTo(points[i-1]) == 0) {
-               throw new IllegalArgumentException(REPEATED_POINTS_FOUND);
-           }
+            if (points[i].compareTo(points[i - 1]) == 0) {
+                throw new IllegalArgumentException(REPEATED_POINTS_FOUND);
+            }
         }
     }
 }
