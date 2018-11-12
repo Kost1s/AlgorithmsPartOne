@@ -76,17 +76,15 @@ public class BruteCollinearPoints {
             throw new IllegalArgumentException(CONSTRUCTOR_ARGUMENT_IS_NULL);
         }
 
-        Arrays.sort(points);
-
-        if (points[0] == null) {
-            throw new IllegalArgumentException(NULL_POINT_FOUND);
-        }
-
-        for (int i = 1; i < points.length; i++) {
-            if (points[i] == null) {
+        for (Point point : points) {
+            if (point == null) {
                 throw new IllegalArgumentException(NULL_POINT_FOUND);
             }
+        }
 
+        Arrays.sort(points);
+
+        for (int i = 1; i < points.length; i++) {
             if (points[i].compareTo(points[i - 1]) == 0) {
                 throw new IllegalArgumentException(REPEATED_POINTS_FOUND);
             }
