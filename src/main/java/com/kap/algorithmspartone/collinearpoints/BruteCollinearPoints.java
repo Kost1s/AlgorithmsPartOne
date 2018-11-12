@@ -44,7 +44,7 @@ public class BruteCollinearPoints {
                 equalSlopes = 0;
                 while ((equalSlopes < 2) && (j < points.length)) {
 
-                    if (points[i].slopeTo(points[j]) == slope) {
+                    if (Double.compare(points[i].slopeTo(points[j]), slope) == 0) {
                         equalSlopes++;
                     }
 
