@@ -13,17 +13,29 @@ public class BruteCollinearPoints {
     private static final String NULL_POINT_FOUND = "Null point found.";
 
     private final Point[] points;
-    private int numberOfSegments = 0;
+    private final LineSegment[] segments;
 
     public BruteCollinearPoints(final Point[] points) {
         checkPointsValidity(points);
         this.points = Arrays.copyOf(points, points.length);
+        segments = getSegments();
     }
 
     /**
      * @return the line segments array created from the point given
      */
     public LineSegment[] segments() {
+        return Arrays.copyOf(segments, segments.length);
+    }
+
+    /**
+     * @return the number of line segments created from the points given
+     */
+    public int numberOfSegments() {
+        return segments.length;
+    }
+
+    private LineSegment[] getSegments() {
         ArrayList<LineSegment> lineSegments = new ArrayList<>();
 
         Arrays.sort(points);
@@ -50,7 +62,6 @@ public class BruteCollinearPoints {
 
                     if (equalSlopes == 2) {
                         lineSegments.add(new LineSegment(points[i], points[j]));
-                        numberOfSegments++;
                         j = points.length;
                         k = points.length;
                     }
@@ -60,15 +71,8 @@ public class BruteCollinearPoints {
             }
         }
 
-        LineSegment[] segments = new LineSegment[lineSegments.size()];
-        return lineSegments.toArray(segments);
-    }
-
-    /**
-     * @return the number of line segments created from the points given
-     */
-    public int numberOfSegments() {
-        return numberOfSegments;
+        LineSegment[] lines = new LineSegment[lineSegments.size()];
+        return lineSegments.toArray(lines);
     }
 
     private void checkPointsValidity(Point[] points) {
