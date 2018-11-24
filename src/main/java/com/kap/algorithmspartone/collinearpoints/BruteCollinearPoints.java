@@ -38,32 +38,33 @@ public class BruteCollinearPoints {
     private LineSegment[] getSegments() {
         ArrayList<LineSegment> lineSegments = new ArrayList<>();
 
-        Arrays.sort(points);
+        Point[] sortedPoints = Arrays.copyOf(points, points.length);
+        Arrays.sort(sortedPoints);
 
         int equalSlopes;
         int j;
         double slope;
-        for (int i = 0; i < points.length; i++) {
-            if ((i + 1) == points.length) {
+        for (int i = 0; i < sortedPoints.length; i++) {
+            if ((i + 1) == sortedPoints.length) {
                 break;
             }
 
-            for (int k = i + 1; k < points.length; k++) {
-                slope = points[i].slopeTo(points[k]);
+            for (int k = i + 1; k < sortedPoints.length; k++) {
+                slope = sortedPoints[i].slopeTo(sortedPoints[k]);
 
                 j = k + 1;
 
                 equalSlopes = 0;
-                while ((equalSlopes < 2) && (j < points.length)) {
+                while ((equalSlopes < 2) && (j < sortedPoints.length)) {
 
-                    if (Double.compare(points[i].slopeTo(points[j]), slope) == 0) {
+                    if (Double.compare(sortedPoints[i].slopeTo(sortedPoints[j]), slope) == 0) {
                         equalSlopes++;
                     }
 
                     if (equalSlopes == 2) {
-                        lineSegments.add(new LineSegment(points[i], points[j]));
-                        j = points.length;
-                        k = points.length;
+                        lineSegments.add(new LineSegment(sortedPoints[i], sortedPoints[j]));
+                        j = sortedPoints.length;
+                        k = sortedPoints.length;
                     }
 
                     j++;
@@ -86,10 +87,11 @@ public class BruteCollinearPoints {
             }
         }
 
-        Arrays.sort(points);
+        Point[] sortedPoints = Arrays.copyOf(points, points.length);
+        Arrays.sort(sortedPoints);
 
-        for (int i = 1; i < points.length; i++) {
-            if (points[i].compareTo(points[i - 1]) == 0) {
+        for (int i = 1; i < sortedPoints.length; i++) {
+            if (sortedPoints[i].compareTo(sortedPoints[i - 1]) == 0) {
                 throw new IllegalArgumentException(REPEATED_POINTS_FOUND);
             }
         }
