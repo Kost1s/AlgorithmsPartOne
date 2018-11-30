@@ -41,39 +41,25 @@ public class BruteCollinearPoints {
         Point[] sortedPoints = Arrays.copyOf(points, points.length);
         Arrays.sort(sortedPoints);
 
-        int equalSlopes;
-        int j;
-        double slope;
         for (int i = 0; i < sortedPoints.length; i++) {
-            if ((i + 1) == sortedPoints.length) {
-                break;
-            }
-
-            for (int k = i + 1; k < sortedPoints.length; k++) {
-                slope = sortedPoints[i].slopeTo(sortedPoints[k]);
-
-                j = k + 1;
-
-                equalSlopes = 0;
-                while ((equalSlopes < 2) && (j < sortedPoints.length)) {
-
-                    if (Double.compare(sortedPoints[i].slopeTo(sortedPoints[j]), slope) == 0) {
-                        equalSlopes++;
+            for(int j = i + 1; j < sortedPoints.length; j++) {
+                for(int k = j + 1; k < sortedPoints.length; k++) {
+                    for(int l = k + 1; l < sortedPoints.length; l++) {
+                        if(pointsAreCollinear(sortedPoints[i], sortedPoints[j], sortedPoints[k], sortedPoints[l])) {
+                            lineSegments.add(new LineSegment(sortedPoints[i], sortedPoints[l]));
+                        }
                     }
-
-                    if (equalSlopes == 2) {
-                        lineSegments.add(new LineSegment(sortedPoints[i], sortedPoints[j]));
-                        j = sortedPoints.length;
-                        k = sortedPoints.length;
-                    }
-
-                    j++;
                 }
             }
         }
 
         LineSegment[] lines = new LineSegment[lineSegments.size()];
         return lineSegments.toArray(lines);
+    }
+
+    private boolean pointsAreCollinear(Point p1, Point p2, Point p3, Point p4) {
+        return (Double.compare(p1.slopeTo(p2), p1.slopeTo(p3)) == 0) &&
+               (Double.compare(p1.slopeTo(p3), p1.slopeTo(p4)) == 0);
     }
 
     private void checkPointsValidity(Point[] points) {
