@@ -42,11 +42,11 @@ public class BruteCollinearPoints {
         Arrays.sort(sortedPoints);
 
         for (int i = 0; i < sortedPoints.length; i++) {
-            for(int j = i + 1; j < sortedPoints.length; j++) {
-                for(int k = j + 1; k < sortedPoints.length; k++) {
-                    for(int l = k + 1; l < sortedPoints.length; l++) {
-                        if(pointsAreCollinear(sortedPoints[i], sortedPoints[j], sortedPoints[k], sortedPoints[l])) {
-                            lineSegments.add(new LineSegment(sortedPoints[i], sortedPoints[l]));
+            for (int j = i + 1; j < sortedPoints.length; j++) {
+                for (int k = j + 1; k < sortedPoints.length; k++) {
+                    for (int m = k + 1; m < sortedPoints.length; m++) {
+                        if (pointsAreCollinear(sortedPoints[i], sortedPoints[j], sortedPoints[k], sortedPoints[m])) {
+                            lineSegments.add(new LineSegment(sortedPoints[i], sortedPoints[m]));
                         }
                     }
                 }
@@ -62,18 +62,18 @@ public class BruteCollinearPoints {
                (Double.compare(p1.slopeTo(p3), p1.slopeTo(p4)) == 0);
     }
 
-    private void checkPointsValidity(Point[] points) {
-        if (points == null) {
+    private void checkPointsValidity(Point[] pointsToCheck) {
+        if (pointsToCheck == null) {
             throw new IllegalArgumentException(CONSTRUCTOR_ARGUMENT_IS_NULL);
         }
 
-        for (Point point : points) {
+        for (Point point : pointsToCheck) {
             if (point == null) {
                 throw new IllegalArgumentException(NULL_POINT_FOUND);
             }
         }
 
-        Point[] sortedPoints = Arrays.copyOf(points, points.length);
+        Point[] sortedPoints = Arrays.copyOf(pointsToCheck, pointsToCheck.length);
         Arrays.sort(sortedPoints);
 
         for (int i = 1; i < sortedPoints.length; i++) {
