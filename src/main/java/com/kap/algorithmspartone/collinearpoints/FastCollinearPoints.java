@@ -50,24 +50,30 @@ public class FastCollinearPoints {
     private LineSegment[] getSegments() {
         ArrayList<LineSegment> lineSegments = new ArrayList<>();
 
-        
+        Point[] pointsToProcess = Arrays.copyOf(points, points.length);
+
+        double slope;
+        int equalSlopes;
+        int lastIndex;
+        for (Point point : pointsToProcess) {
+            Arrays.sort(pointsToProcess, point.slopeOrder());
+
+            equalSlopes = 0;
+            lastIndex = 0;
+            slope = pointsToProcess[0].slopeTo(pointsToProcess[1]);
+            for (int i = 2; i < pointsToProcess.length; i++) {
+                if (Double.compare(pointsToProcess[0].slopeTo(pointsToProcess[i]), slope) == 0) {
+                    equalSlopes++;
+                    lastIndex = i;
+                }
+            }
+            if (equalSlopes > 3) {
+                lineSegments.add(new LineSegment(pointsToProcess[0], pointsToProcess[lastIndex]));
+            }
+        }
+
         LineSegment[] lines = new LineSegment[lineSegments.size()];
         return lineSegments.toArray(lines);
-    }
-
-    /**
-     * Checks whether four points are collinear.
-     *
-     * @param p1 point 1
-     * @param p2 point 2
-     * @param p3 point 3
-     * @param p4 point 4
-     *
-     * @return true if the points are collinear and false otherwise
-     */
-    private boolean pointsAreCollinear(Point p1, Point p2, Point p3, Point p4) {
-        return (Double.compare(p1.slopeTo(p2), p1.slopeTo(p3)) == 0) &&
-               (Double.compare(p1.slopeTo(p3), p1.slopeTo(p4)) == 0);
     }
 
     /**
@@ -132,6 +138,5 @@ public class FastCollinearPoints {
         Arrays.sort(sortedArray);
         return sortedArray;
     }
-
 
 }
