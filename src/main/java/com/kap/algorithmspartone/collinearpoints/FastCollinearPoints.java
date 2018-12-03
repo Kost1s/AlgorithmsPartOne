@@ -51,24 +51,24 @@ public class FastCollinearPoints {
         ArrayList<LineSegment> lineSegments = new ArrayList<>();
 
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
+        Point[] pointsToSort = Arrays.copyOf(points, points.length);
 
         double slope;
         int equalSlopes;
         int lastIndex;
         for (Point point : pointsToProcess) {
-            Arrays.sort(pointsToProcess, point.slopeOrder());
+            Arrays.sort(pointsToSort, point.slopeOrder());
 
             equalSlopes = 0;
             lastIndex = 0;
-            slope = pointsToProcess[0].slopeTo(pointsToProcess[1]);
-            for (int i = 2; i < pointsToProcess.length; i++) {
-                if (Double.compare(pointsToProcess[0].slopeTo(pointsToProcess[i]), slope) == 0) {
+            for (int i = 2; i < pointsToSort.length; i++) {
+                if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
                     equalSlopes++;
                     lastIndex = i;
                 }
             }
-            if (equalSlopes > 3) {
-                lineSegments.add(new LineSegment(pointsToProcess[0], pointsToProcess[lastIndex]));
+            if (equalSlopes >= 3) {
+                lineSegments.add(new LineSegment(point, pointsToSort[lastIndex]));
             }
         }
 
