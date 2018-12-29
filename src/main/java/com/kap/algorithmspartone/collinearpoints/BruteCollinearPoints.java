@@ -48,6 +48,7 @@ public class BruteCollinearPoints {
      * @return the line segments that can be created from the collinear points found
      */
     private LineSegment[] getSegments() {
+        //todo declare with interface -> List
         ArrayList<LineSegment> lineSegments = new ArrayList<>();
 
         Point[] sortedPoints = copyArrayAndSortAscending(points);
