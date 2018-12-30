@@ -1,7 +1,9 @@
 package com.kap.algorithmspartone.collinearpoints;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Konstantinos Antoniou
@@ -48,32 +50,52 @@ public class FastCollinearPoints {
      * @return the line segments that can be created from the collinear points found
      */
     private LineSegment[] getSegments() {
-        ArrayList<LineSegment> lineSegments = new ArrayList<>();
+        List<LineSegment> lineSegments = new ArrayList<>();
+        List<Point> collinearPoints = new ArrayList<>();
 
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
         Point[] pointsToSort = Arrays.copyOf(points, points.length);
 
-        double slope;
-        int equalSlopes;
-        int lastIndex;
         for (Point point : pointsToProcess) {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
-            equalSlopes = 0;
-            lastIndex = 0;
+            collinearPoints.clear();
+            collinearPoints.add(point);
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
-                    equalSlopes++;
-                    lastIndex = i;
+                    addUniquePoints(collinearPoints, pointsToSort[i - 1], pointsToSort[i]);
+                } else if (collinearPoints.size() > 2) {
+                    Collections.sort(collinearPoints);
+                    lineSegments.add(new LineSegment(collinearPoints.get(0) ,
+                                                     collinearPoints.get(collinearPoints.size() - 1)));
+                    collinearPoints.clear();
                 }
-            }
-            if (equalSlopes >= 3) {
-                lineSegments.add(new LineSegment(point, pointsToSort[lastIndex]));
             }
         }
 
         LineSegment[] lines = new LineSegment[lineSegments.size()];
         return lineSegments.toArray(lines);
+    }
+
+    private void addUniquePoints(List<Point> collinearPoints, Point pointA, Point pointB) {
+        boolean listContainsPointA = false;
+        boolean listContainsPointB = false;
+
+        for(Point point : collinearPoints) {
+            if(point.compareTo(pointA) == 0) {
+                listContainsPointA = true;
+            }
+            if(point.compareTo(pointB) == 0) {
+                listContainsPointB = true;
+            }
+        }
+
+        if(!listContainsPointA) {
+            collinearPoints.add(pointA);
+        }
+        if(!listContainsPointB) {
+            collinearPoints.add(pointB);
+        }
     }
 
     /**
