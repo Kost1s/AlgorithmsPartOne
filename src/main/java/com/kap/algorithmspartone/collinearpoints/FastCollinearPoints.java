@@ -65,7 +65,7 @@ public class FastCollinearPoints {
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
                     addUniquePoints(collinearPoints, pointsToSort[i - 1], pointsToSort[i]);
-                } else if ((collinearPoints.size() > 2)
+                } else if ((collinearPoints.size() > 3)
                            && (!collinearPointsListsContains(collinearPointsLists, collinearPoints))) {
                     lineSegments.add(new LineSegment(collinearPoints.get(0),
                                                      collinearPoints.get(collinearPoints.size() - 1)));
