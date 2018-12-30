@@ -51,7 +51,8 @@ public class FastCollinearPoints {
      */
     private LineSegment[] getSegments() {
         List<LineSegment> lineSegments = new ArrayList<>();
-        List<Point> collinearPoints = new ArrayList<>();
+        List<Point> collinearPoints;
+        List<List<Point>> collinearPointsLists = new ArrayList<>();
 
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
         Point[] pointsToSort = Arrays.copyOf(points, points.length);
@@ -59,16 +60,15 @@ public class FastCollinearPoints {
         for (Point point : pointsToProcess) {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
-            collinearPoints.clear();
+            collinearPoints = new ArrayList<>();
             collinearPoints.add(point);
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
                     addUniquePoints(collinearPoints, pointsToSort[i - 1], pointsToSort[i]);
-                } else if (collinearPoints.size() > 2) {
-                    Collections.sort(collinearPoints);
-                    lineSegments.add(new LineSegment(collinearPoints.get(0) ,
+                } else if ((collinearPoints.size() > 2)
+                           && (!collinearPointsListsContains(collinearPointsLists, collinearPoints))) {
+                    lineSegments.add(new LineSegment(collinearPoints.get(0),
                                                      collinearPoints.get(collinearPoints.size() - 1)));
-                    collinearPoints.clear();
                 }
             }
         }
@@ -77,23 +77,57 @@ public class FastCollinearPoints {
         return lineSegments.toArray(lines);
     }
 
+    /**
+     * Checks whether the collinear points list that is about to be added already exists in the list of collinear points
+     * lists.
+     *
+     * @param collinearPointsLists list of collinear points lists
+     * @param collinearPoints      collinear points list about to be added
+     *
+     * @return true if the list to be added already exists in the list of coll. points lists and false otherwise
+     */
+    private boolean collinearPointsListsContains(List<List<Point>> collinearPointsLists, List<Point> collinearPoints) {
+        boolean listExists = false;
+
+        Collections.sort(collinearPoints);
+        for (List<Point> pointsList : collinearPointsLists) {
+            if ((pointsList.get(0).compareTo(collinearPoints.get(0)) == 0) &&
+                (pointsList.get(pointsList.size() - 1).compareTo(collinearPoints.get(collinearPoints.size() - 1)) ==
+                 0)) {
+                listExists = true;
+            }
+        }
+        if (!listExists) {
+            collinearPointsLists.add(collinearPoints);
+        }
+        return listExists;
+    }
+
+    /**
+     * Adds points in the given collinear points list only in the case that these points are not already included in the
+     * list.
+     *
+     * @param collinearPoints given collinear points list
+     * @param pointA          first point to be added in the list
+     * @param pointB          second point to be added in the list
+     */
     private void addUniquePoints(List<Point> collinearPoints, Point pointA, Point pointB) {
         boolean listContainsPointA = false;
         boolean listContainsPointB = false;
 
-        for(Point point : collinearPoints) {
-            if(point.compareTo(pointA) == 0) {
+        for (Point point : collinearPoints) {
+            if (point.compareTo(pointA) == 0) {
                 listContainsPointA = true;
             }
-            if(point.compareTo(pointB) == 0) {
+            if (point.compareTo(pointB) == 0) {
                 listContainsPointB = true;
             }
         }
 
-        if(!listContainsPointA) {
+        if (!listContainsPointA) {
             collinearPoints.add(pointA);
         }
-        if(!listContainsPointB) {
+        if (!listContainsPointB) {
             collinearPoints.add(pointB);
         }
     }
