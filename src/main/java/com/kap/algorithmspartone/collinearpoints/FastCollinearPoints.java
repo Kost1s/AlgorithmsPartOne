@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * @author Konstantinos Antoniou
@@ -16,6 +18,7 @@ public class FastCollinearPoints {
 
     private final Point[] points;
     private final LineSegment[] segments;
+    private Map<Point, List<Point>> uniqueLists;
 
     /**
      * Class constructor.
@@ -26,6 +29,7 @@ public class FastCollinearPoints {
      */
     public FastCollinearPoints(final Point[] points) {
         checkPointsValidity(points);
+        uniqueLists = new HashMap<>();
         this.points = Arrays.copyOf(points, points.length);
         segments = getSegments();
     }
@@ -56,8 +60,6 @@ public class FastCollinearPoints {
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
         Point[] pointsToSort = Arrays.copyOf(points, points.length);
 
-        Point startPoint = pointsToProcess[0];
-        Point endPoint = pointsToProcess[0];
         for (Point point : pointsToProcess) {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
@@ -71,13 +73,9 @@ public class FastCollinearPoints {
                     collinearPoints.add(pointsToSort[i]);
                 } else if (collinearPoints.size() > 3) {
                     Collections.sort(collinearPoints);
-                    if (((startPoint.compareTo(collinearPoints.get(0)) != 0) &&
-                         (endPoint.compareTo(collinearPoints.get(collinearPoints.size() - 1)) != 0)) ||
-                        lineSegments.isEmpty()) {
+                    if (segmentIsUnique(collinearPoints)) {
                         lineSegments.add(new LineSegment(collinearPoints.get(0),
                                                          collinearPoints.get(collinearPoints.size() - 1)));
-                        startPoint = collinearPoints.get(0);
-                        endPoint = collinearPoints.get(collinearPoints.size() - 1);
                     }
                     collinearPoints.clear();
                 }
@@ -86,6 +84,18 @@ public class FastCollinearPoints {
 
         LineSegment[] lines = new LineSegment[lineSegments.size()];
         return lineSegments.toArray(lines);
+    }
+
+    private boolean segmentIsUnique(List<Point> points) {
+        List<Point> checkPoints;
+
+        if (!uniqueLists.containsKey(points.get(0))) {
+            uniqueLists.put(points.get(0), points);
+            return true;
+        } else {
+            checkPoints = uniqueLists.get(points.get(0));
+            return checkPoints.get(checkPoints.size() - 1).compareTo(points.get(points.size() - 1)) != 0;
+        }
     }
 
     /**
