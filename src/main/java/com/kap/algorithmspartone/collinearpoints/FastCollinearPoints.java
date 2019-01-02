@@ -61,10 +61,13 @@ public class FastCollinearPoints {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
             collinearPoints = new ArrayList<>();
-            collinearPoints.add(point);
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
-                    addUniquePoints(collinearPoints, pointsToSort[i - 1], pointsToSort[i]);
+                    if(collinearPoints.isEmpty()) {
+                        collinearPoints.add(point);
+                        collinearPoints.add(pointsToSort[i - 1]);
+                    }
+                    collinearPoints.add(pointsToSort[i]);
                 } else if ((collinearPoints.size() > 3)
                            && (!collinearPointsListsContains(collinearPointsLists, collinearPoints))) {
                     lineSegments.add(new LineSegment(collinearPoints.get(0),
@@ -101,35 +104,6 @@ public class FastCollinearPoints {
             collinearPointsLists.add(collinearPoints);
         }
         return listExists;
-    }
-
-    /**
-     * Adds points in the given collinear points list only in the case that these points are not already included in the
-     * list.
-     *
-     * @param collinearPoints given collinear points list
-     * @param pointA          first point to be added in the list
-     * @param pointB          second point to be added in the list
-     */
-    private void addUniquePoints(List<Point> collinearPoints, Point pointA, Point pointB) {
-        boolean listContainsPointA = false;
-        boolean listContainsPointB = false;
-
-        for (Point point : collinearPoints) {
-            if (point.compareTo(pointA) == 0) {
-                listContainsPointA = true;
-            }
-            if (point.compareTo(pointB) == 0) {
-                listContainsPointB = true;
-            }
-        }
-
-        if (!listContainsPointA) {
-            collinearPoints.add(pointA);
-        }
-        if (!listContainsPointB) {
-            collinearPoints.add(pointB);
-        }
     }
 
     /**
