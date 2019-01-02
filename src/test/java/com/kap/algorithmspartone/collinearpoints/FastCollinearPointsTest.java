@@ -13,6 +13,7 @@ public class FastCollinearPointsTest {
 
     private Point[] inputEight;
     private Point[] inputSix;
+    private Point[] inputFour;
 
     @Before
     public void setUp() {
@@ -33,6 +34,13 @@ public class FastCollinearPointsTest {
         inputSix[3] = new Point(21000, 10000);
         inputSix[4] = new Point(1234, 5678);
         inputSix[5] = new Point(14000, 10000);
+
+        inputFour = new Point[4];
+        inputFour[0] = new Point(12399,  9707);
+        inputFour[1] = new Point(8978,  9707);
+        inputFour[2] = new Point(16280,  9707);
+        inputFour[3] = new Point(14071,  9707);
+
     }
 
     @Test
@@ -48,6 +56,16 @@ public class FastCollinearPointsTest {
     @Test
     public void testInputSix() {
         FastCollinearPoints collinearPoints = new FastCollinearPoints(inputSix);
+        LineSegment[] segments = collinearPoints.segments();
+        assertEquals(1, collinearPoints.numberOfSegments());
+        for (LineSegment segment : segments) {
+            StdOut.println(segment);
+        }
+    }
+
+    @Test
+    public void testInputFour() {
+        FastCollinearPoints collinearPoints = new FastCollinearPoints(inputFour);
         LineSegment[] segments = collinearPoints.segments();
         assertEquals(1, collinearPoints.numberOfSegments());
         for (LineSegment segment : segments) {
