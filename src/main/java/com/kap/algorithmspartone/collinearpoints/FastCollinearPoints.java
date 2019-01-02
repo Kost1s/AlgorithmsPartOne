@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Map;
-import java.util.HashMap;
 
 /**
  * @author Konstantinos Antoniou
@@ -18,7 +16,7 @@ public class FastCollinearPoints {
 
     private final Point[] points;
     private final LineSegment[] segments;
-    private Map<Point, List<Point>> uniqueLists;
+    private final List<Point> uniqueLists;
 
     /**
      * Class constructor.
@@ -29,7 +27,7 @@ public class FastCollinearPoints {
      */
     public FastCollinearPoints(final Point[] points) {
         checkPointsValidity(points);
-        uniqueLists = new HashMap<>();
+        uniqueLists = new ArrayList<>();
         this.points = Arrays.copyOf(points, points.length);
         segments = getSegments();
     }
@@ -87,15 +85,11 @@ public class FastCollinearPoints {
     }
 
     private boolean segmentIsUnique(List<Point> points) {
-        List<Point> checkPoints;
-
-        if (!uniqueLists.containsKey(points.get(0))) {
-            uniqueLists.put(points.get(0), points);
+        if (!uniqueLists.contains(points.get(0))) {
+            uniqueLists.add(points.get(0));
             return true;
-        } else {
-            checkPoints = uniqueLists.get(points.get(0));
-            return checkPoints.get(checkPoints.size() - 1).compareTo(points.get(points.size() - 1)) != 0;
         }
+        return false;
     }
 
     /**
