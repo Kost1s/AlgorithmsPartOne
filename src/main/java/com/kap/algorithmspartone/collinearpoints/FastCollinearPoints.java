@@ -51,59 +51,41 @@ public class FastCollinearPoints {
      */
     private LineSegment[] getSegments() {
         List<LineSegment> lineSegments = new ArrayList<>();
-        List<Point> collinearPoints;
-        List<List<Point>> collinearPointsLists = new ArrayList<>();
+        List<Point> collinearPoints = new ArrayList<>();
 
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
         Point[] pointsToSort = Arrays.copyOf(points, points.length);
 
+        Point startPoint = pointsToProcess[0];
+        Point endPoint = pointsToProcess[0];
         for (Point point : pointsToProcess) {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
-            collinearPoints = new ArrayList<>();
+            collinearPoints.clear();
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
-                    if(collinearPoints.isEmpty()) {
+                    if (collinearPoints.isEmpty()) {
                         collinearPoints.add(point);
                         collinearPoints.add(pointsToSort[i - 1]);
                     }
                     collinearPoints.add(pointsToSort[i]);
-                } else if ((collinearPoints.size() > 3)
-                           && (!collinearPointsListsContains(collinearPointsLists, collinearPoints))) {
-                    lineSegments.add(new LineSegment(collinearPoints.get(0),
-                                                     collinearPoints.get(collinearPoints.size() - 1)));
+                } else if (collinearPoints.size() > 3) {
+                    Collections.sort(collinearPoints);
+                    if (((startPoint.compareTo(collinearPoints.get(0)) != 0) &&
+                         (endPoint.compareTo(collinearPoints.get(collinearPoints.size() - 1)) != 0)) ||
+                        lineSegments.isEmpty()) {
+                        lineSegments.add(new LineSegment(collinearPoints.get(0),
+                                                         collinearPoints.get(collinearPoints.size() - 1)));
+                        startPoint = collinearPoints.get(0);
+                        endPoint = collinearPoints.get(collinearPoints.size() - 1);
+                    }
+                    collinearPoints.clear();
                 }
             }
         }
 
         LineSegment[] lines = new LineSegment[lineSegments.size()];
         return lineSegments.toArray(lines);
-    }
-
-    /**
-     * Checks whether the collinear points list that is about to be added already exists in the list of collinear points
-     * lists.
-     *
-     * @param collinearPointsLists list of collinear points lists
-     * @param collinearPoints      collinear points list about to be added
-     *
-     * @return true if the list to be added already exists in the list of coll. points lists and false otherwise
-     */
-    private boolean collinearPointsListsContains(List<List<Point>> collinearPointsLists, List<Point> collinearPoints) {
-        boolean listExists = false;
-
-        Collections.sort(collinearPoints);
-        for (List<Point> pointsList : collinearPointsLists) {
-            if ((pointsList.get(0).compareTo(collinearPoints.get(0)) == 0) &&
-                (pointsList.get(pointsList.size() - 1).compareTo(collinearPoints.get(collinearPoints.size() - 1)) ==
-                 0)) {
-                listExists = true;
-            }
-        }
-        if (!listExists) {
-            collinearPointsLists.add(collinearPoints);
-        }
-        return listExists;
     }
 
     /**
