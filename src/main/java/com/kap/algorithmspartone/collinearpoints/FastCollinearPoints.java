@@ -76,6 +76,7 @@ public class FastCollinearPoints {
                                                          collinearPoints.get(collinearPoints.size() - 1)));
                     }
                     collinearPoints.clear();
+                    break;
                 }
             }
         }
