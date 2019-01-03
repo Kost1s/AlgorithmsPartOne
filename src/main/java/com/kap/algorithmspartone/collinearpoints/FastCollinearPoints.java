@@ -69,6 +69,14 @@ public class FastCollinearPoints {
                         collinearPoints.add(pointsToSort[i - 1]);
                     }
                     collinearPoints.add(pointsToSort[i]);
+                    if((collinearPoints.size() > 3) && (pointsToProcess.length == 4)) {
+                        Collections.sort(collinearPoints);
+                        if (segmentIsUnique(collinearPoints)) {
+                            lineSegments.add(new LineSegment(collinearPoints.get(0),
+                                                             collinearPoints.get(collinearPoints.size() - 1)));
+                        }
+                        collinearPoints.clear();
+                    }
                 } else if (collinearPoints.size() > 3) {
                     Collections.sort(collinearPoints);
                     if (segmentIsUnique(collinearPoints)) {
