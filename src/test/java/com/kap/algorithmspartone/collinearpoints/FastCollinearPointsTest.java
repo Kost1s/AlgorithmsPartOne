@@ -104,7 +104,7 @@ public class FastCollinearPointsTest {
     public void testInputFiveByFiveGrid() {
         FastCollinearPoints collinearPoints = new FastCollinearPoints(inputFiveByFiveGrid);
         LineSegment[] segments = collinearPoints.segments();
-        assertEquals(1, collinearPoints.numberOfSegments());
+        assertEquals(11, collinearPoints.numberOfSegments());
         for (LineSegment segment : segments) {
             StdOut.println(segment);
         }
