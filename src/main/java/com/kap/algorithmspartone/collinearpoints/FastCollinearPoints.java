@@ -16,7 +16,7 @@ public class FastCollinearPoints {
 
     private final Point[] points;
     private final LineSegment[] segments;
-    private final List<Point> uniqueLists;
+    private final List<List<Point>> uniqueLists;
 
     /**
      * Class constructor.
@@ -87,8 +87,12 @@ public class FastCollinearPoints {
     }
 
     private boolean segmentIsUnique(List<Point> points) {
-        if (!uniqueLists.contains(points.get(0))) {
-            uniqueLists.add(points.get(0));
+        List<Point> segment = new ArrayList<>(2);
+        segment.add(points.get(0));
+        segment.add(points.get(points.size() - 1));
+
+        if (!uniqueLists.contains(segment)) {
+            uniqueLists.add(segment);
             return true;
         }
         return false;
