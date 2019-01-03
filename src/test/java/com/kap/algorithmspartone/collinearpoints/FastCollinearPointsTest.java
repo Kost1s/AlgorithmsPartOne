@@ -14,6 +14,7 @@ public class FastCollinearPointsTest {
     private Point[] inputEight;
     private Point[] inputSix;
     private Point[] inputFour;
+    private Point[] inputFiveByFiveGrid;
 
     @Before
     public void setUp() {
@@ -41,6 +42,32 @@ public class FastCollinearPointsTest {
         inputFour[2] = new Point(16280,  9707);
         inputFour[3] = new Point(14071,  9707);
 
+        inputFiveByFiveGrid = new Point[25];
+        inputFiveByFiveGrid[0] = new Point(0, 0);
+        inputFiveByFiveGrid[1] = new Point(0, 1);
+        inputFiveByFiveGrid[2] = new Point(0, 2);
+        inputFiveByFiveGrid[3] = new Point(0, 3);
+        inputFiveByFiveGrid[4] = new Point(0, 4);
+        inputFiveByFiveGrid[5] = new Point(1, 0);
+        inputFiveByFiveGrid[6] = new Point(1, 1);
+        inputFiveByFiveGrid[7] = new Point(1, 2);
+        inputFiveByFiveGrid[8] = new Point(1, 3);
+        inputFiveByFiveGrid[9] = new Point(1, 4);
+        inputFiveByFiveGrid[10] = new Point(2, 0);
+        inputFiveByFiveGrid[11] = new Point(2, 1);
+        inputFiveByFiveGrid[12] = new Point(2, 2);
+        inputFiveByFiveGrid[13] = new Point(2, 3);
+        inputFiveByFiveGrid[14] = new Point(2, 4);
+        inputFiveByFiveGrid[15] = new Point(3, 0);
+        inputFiveByFiveGrid[16] = new Point(3, 1);
+        inputFiveByFiveGrid[17] = new Point(3, 2);
+        inputFiveByFiveGrid[18] = new Point(3, 3);
+        inputFiveByFiveGrid[19] = new Point(3, 4);
+        inputFiveByFiveGrid[20] = new Point(4, 0);
+        inputFiveByFiveGrid[21] = new Point(4, 1);
+        inputFiveByFiveGrid[22] = new Point(4, 2);
+        inputFiveByFiveGrid[23] = new Point(4, 3);
+        inputFiveByFiveGrid[24] = new Point(4, 4);
     }
 
     @Test
@@ -66,6 +93,16 @@ public class FastCollinearPointsTest {
     @Test
     public void testInputFour() {
         FastCollinearPoints collinearPoints = new FastCollinearPoints(inputFour);
+        LineSegment[] segments = collinearPoints.segments();
+        assertEquals(1, collinearPoints.numberOfSegments());
+        for (LineSegment segment : segments) {
+            StdOut.println(segment);
+        }
+    }
+
+    @Test
+    public void testInputFiveByFiveGrid() {
+        FastCollinearPoints collinearPoints = new FastCollinearPoints(inputFiveByFiveGrid);
         LineSegment[] segments = collinearPoints.segments();
         assertEquals(1, collinearPoints.numberOfSegments());
         for (LineSegment segment : segments) {
