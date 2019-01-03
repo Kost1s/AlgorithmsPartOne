@@ -69,16 +69,16 @@ public class FastCollinearPoints {
                         collinearPoints.add(pointsToSort[i - 1]);
                     }
                     collinearPoints.add(pointsToSort[i]);
+                } else if (collinearPoints.size() > 3) {
+                    Collections.sort(collinearPoints);
+                    if (segmentIsUnique(collinearPoints)) {
+                        lineSegments.add(new LineSegment(collinearPoints.get(0),
+                                                         collinearPoints.get(collinearPoints.size() - 1)));
+                    }
+                    collinearPoints.clear();
+                } else {
+                    collinearPoints.clear();
                 }
-            }
-
-            if (collinearPoints.size() > 3) {
-                Collections.sort(collinearPoints);
-                if (segmentIsUnique(collinearPoints)) {
-                    lineSegments.add(new LineSegment(collinearPoints.get(0),
-                                                     collinearPoints.get(collinearPoints.size() - 1)));
-                }
-                collinearPoints.clear();
             }
         }
 
