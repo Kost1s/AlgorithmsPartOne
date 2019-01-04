@@ -95,10 +95,10 @@ public class FastCollinearPoints {
         return lineSegments.toArray(lines);
     }
 
-    private boolean segmentIsUnique(List<Point> points) {
+    private boolean segmentIsUnique(List<Point> pointsToCheck) {
         List<Point> segment = new ArrayList<>(2);
-        segment.add(points.get(0));
-        segment.add(points.get(points.size() - 1));
+        segment.add(pointsToCheck.get(0));
+        segment.add(pointsToCheck.get(pointsToCheck.size() - 1));
 
         if (!uniqueLists.contains(segment)) {
             uniqueLists.add(segment);
