@@ -3,7 +3,6 @@ package com.kap.algorithmspartone.collinearpoints;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * @author Konstantinos Antoniou
