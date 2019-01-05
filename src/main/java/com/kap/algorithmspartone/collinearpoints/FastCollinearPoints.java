@@ -15,7 +15,6 @@ public class FastCollinearPoints {
 
     private final Point[] points;
     private final LineSegment[] segments;
-    private final List<List<Point>> uniqueLists;
 
     /**
      * Class constructor.
@@ -26,7 +25,6 @@ public class FastCollinearPoints {
      */
     public FastCollinearPoints(final Point[] points) {
         checkPointsValidity(points);
-        uniqueLists = new ArrayList<>();
         this.points = Arrays.copyOf(points, points.length);
         segments = getSegments();
     }
@@ -107,18 +105,6 @@ public class FastCollinearPoints {
             return pointA;
         }
         return pointB;
-    }
-
-    private boolean segmentIsUnique(Point min, Point max) {
-        List<Point> segment = new ArrayList<>(2);
-        segment.add(min);
-        segment.add(max);
-
-        if (!uniqueLists.contains(segment)) {
-            uniqueLists.add(segment);
-            return true;
-        }
-        return false;
     }
 
     /**
