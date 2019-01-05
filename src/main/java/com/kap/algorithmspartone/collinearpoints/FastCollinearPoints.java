@@ -52,42 +52,41 @@ public class FastCollinearPoints {
      */
     private LineSegment[] getSegments() {
         List<LineSegment> lineSegments = new ArrayList<>();
-        List<Point> collinearPoints = new ArrayList<>();
 
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
         Point[] pointsToSort = Arrays.copyOf(points, points.length);
 
         Point minPoint = null;
         Point maxPoint = null;
+        int collinearPoints;
         for (Point point : pointsToProcess) {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
-            collinearPoints.clear();
+            collinearPoints = 0;
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
-                    if (collinearPoints.isEmpty()) {
-                        collinearPoints.add(point);
-                        collinearPoints.add(pointsToSort[i - 1]);
+                    if (collinearPoints == 0) {
+                        collinearPoints = 2;
                         minPoint = findMinPoint(point, pointsToSort[i - 1]);
                         maxPoint = findMaxPoint(point, pointsToSort[i - 1]);
 
                     }
-                    collinearPoints.add(pointsToSort[i]);
+                    collinearPoints++;
                     minPoint = findMinPoint(minPoint, pointsToSort[i]);
                     maxPoint = findMaxPoint(maxPoint, pointsToSort[i]);
-                } else if ((collinearPoints.size() > 3) && segmentIsUnique(minPoint, maxPoint)) {
+                } else if ((collinearPoints > 3) && segmentIsUnique(minPoint, maxPoint)) {
                     lineSegments.add(new LineSegment(minPoint, maxPoint));
-                    collinearPoints.clear();
+                    collinearPoints = 0;
                     maxPoint = null;
                     minPoint = null;
                 } else {
-                    collinearPoints.clear();
+                    collinearPoints = 0;
                     maxPoint = null;
                     minPoint = null;
                 }
             }
 
-            if ((collinearPoints.size() > 3) && segmentIsUnique(minPoint, maxPoint)) {
+            if ((collinearPoints > 3) && segmentIsUnique(minPoint, maxPoint)) {
                 lineSegments.add(new LineSegment(minPoint, maxPoint));
             }
         }
