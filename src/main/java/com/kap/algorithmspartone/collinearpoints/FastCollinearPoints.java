@@ -74,7 +74,7 @@ public class FastCollinearPoints {
                     collinearPoints++;
                     minPoint = findMinPoint(minPoint, pointsToSort[i]);
                     maxPoint = findMaxPoint(maxPoint, pointsToSort[i]);
-                } else if ((collinearPoints > 3) && segmentIsUnique(minPoint, maxPoint)) {
+                } else if ((collinearPoints > 3) && (point.compareTo(minPoint) == 0)) {
                     lineSegments.add(new LineSegment(minPoint, maxPoint));
                     collinearPoints = 0;
                     maxPoint = null;
@@ -86,7 +86,7 @@ public class FastCollinearPoints {
                 }
             }
 
-            if ((collinearPoints > 3) && segmentIsUnique(minPoint, maxPoint)) {
+            if ((collinearPoints > 3) && (point.compareTo(minPoint) == 0)) {
                 lineSegments.add(new LineSegment(minPoint, maxPoint));
             }
         }
