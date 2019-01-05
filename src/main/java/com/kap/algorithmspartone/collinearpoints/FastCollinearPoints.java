@@ -58,6 +58,8 @@ public class FastCollinearPoints {
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
         Point[] pointsToSort = Arrays.copyOf(points, points.length);
 
+        Point minPoint = null;
+        Point maxPoint = null;
         for (Point point : pointsToProcess) {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
@@ -67,27 +69,31 @@ public class FastCollinearPoints {
                     if (collinearPoints.isEmpty()) {
                         collinearPoints.add(point);
                         collinearPoints.add(pointsToSort[i - 1]);
+                        minPoint = findMinPoint(point, pointsToSort[i - 1]);
+                        maxPoint = findMaxPoint(point, pointsToSort[i - 1]);
+
                     }
                     collinearPoints.add(pointsToSort[i]);
+                    minPoint = findMinPoint(minPoint, pointsToSort[i]);
+                    maxPoint = findMaxPoint(maxPoint, pointsToSort[i]);
                 } else if (collinearPoints.size() > 3) {
-                    Collections.sort(collinearPoints);
-                    if (segmentIsUnique(collinearPoints)) {
-                        lineSegments.add(new LineSegment(collinearPoints.get(0),
-                                                         collinearPoints.get(collinearPoints.size() - 1)));
+                    if (segmentIsUnique(minPoint, maxPoint)) {
+                        lineSegments.add(new LineSegment(minPoint, maxPoint));
                     }
                     collinearPoints.clear();
+                    maxPoint = null;
+                    minPoint = null;
                 } else {
                     collinearPoints.clear();
+                    maxPoint = null;
+                    minPoint = null;
                 }
             }
 
             if (collinearPoints.size() > 3) {
-                Collections.sort(collinearPoints);
-                if (segmentIsUnique(collinearPoints)) {
-                    lineSegments.add(new LineSegment(collinearPoints.get(0),
-                                                     collinearPoints.get(collinearPoints.size() - 1)));
+                if (segmentIsUnique(minPoint, maxPoint)) {
+                    lineSegments.add(new LineSegment(minPoint, maxPoint));
                 }
-                collinearPoints.clear();
             }
         }
 
@@ -95,10 +101,24 @@ public class FastCollinearPoints {
         return lineSegments.toArray(lines);
     }
 
-    private boolean segmentIsUnique(List<Point> pointsToCheck) {
+    private Point findMinPoint(Point pointA, Point pointB) {
+        if (pointA.compareTo(pointB) < 0) {
+            return pointA;
+        }
+        return pointB;
+    }
+
+    private Point findMaxPoint(Point pointA, Point pointB) {
+        if (pointA.compareTo(pointB) > 0) {
+            return pointA;
+        }
+        return pointB;
+    }
+
+    private boolean segmentIsUnique(Point min, Point max) {
         List<Point> segment = new ArrayList<>(2);
-        segment.add(pointsToCheck.get(0));
-        segment.add(pointsToCheck.get(pointsToCheck.size() - 1));
+        segment.add(min);
+        segment.add(max);
 
         if (!uniqueLists.contains(segment)) {
             uniqueLists.add(segment);
