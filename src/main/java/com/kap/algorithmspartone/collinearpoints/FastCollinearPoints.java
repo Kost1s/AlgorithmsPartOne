@@ -93,20 +93,20 @@ public class FastCollinearPoints {
     }
 
     private Point findMinPoint(Point min, Point pointA, Point pointB) {
-        if ((min.compareTo(pointA) < 0) && (min.compareTo(pointB) < 0)) {
+        if ((min.compareTo(pointA) <= 0) && (min.compareTo(pointB) <= 0)) {
             return min;
         }
-        if ((pointA.compareTo(min) < 0) && (pointA.compareTo(pointB) < 0)) {
+        if ((pointA.compareTo(min) <= 0) && (pointA.compareTo(pointB) <= 0)) {
             return pointA;
         }
         return pointB;
     }
 
     private Point findMaxPoint(Point max, Point pointA, Point pointB) {
-        if ((max.compareTo(pointA) > 0) && (max.compareTo(pointB) > 0)) {
+        if ((max.compareTo(pointA) >= 0) && (max.compareTo(pointB) >= 0)) {
             return max;
         }
-        if ((pointA.compareTo(max) > 0) && (pointA.compareTo(pointB) > 0)) {
+        if ((pointA.compareTo(max) >= 0) && (pointA.compareTo(pointB) >= 0)) {
             return pointA;
         }
         return pointB;
