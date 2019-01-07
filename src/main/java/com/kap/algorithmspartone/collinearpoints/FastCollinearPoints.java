@@ -54,33 +54,32 @@ public class FastCollinearPoints {
         Point[] pointsToProcess = Arrays.copyOf(points, points.length);
         Point[] pointsToSort = Arrays.copyOf(points, points.length);
 
-        Point minPoint = null;
-        Point maxPoint = null;
+        Point minPoint;
+        Point maxPoint;
         int collinearPoints;
         for (Point point : pointsToProcess) {
             Arrays.sort(pointsToSort, point.slopeOrder());
 
             collinearPoints = 0;
+            minPoint = point;
+            maxPoint = point;
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
                     if (collinearPoints == 0) {
                         collinearPoints = 2;
-                        minPoint = findMinPoint(point, pointsToSort[i - 1]);
-                        maxPoint = findMaxPoint(point, pointsToSort[i - 1]);
-
                     }
                     collinearPoints++;
-                    minPoint = findMinPoint(minPoint, pointsToSort[i]);
-                    maxPoint = findMaxPoint(maxPoint, pointsToSort[i]);
+                    minPoint = findMinPoint(minPoint, pointsToSort[i - 1], pointsToSort[i]);
+                    maxPoint = findMaxPoint(maxPoint, pointsToSort[i - 1], pointsToSort[i]);
                 } else if ((collinearPoints > 3) && (point.compareTo(minPoint) == 0)) {
                     lineSegments.add(new LineSegment(minPoint, maxPoint));
                     collinearPoints = 0;
-                    maxPoint = null;
-                    minPoint = null;
+                    maxPoint = point;
+                    minPoint = point;
                 } else {
                     collinearPoints = 0;
-                    maxPoint = null;
-                    minPoint = null;
+                    maxPoint = point;
+                    minPoint = point;
                 }
             }
 
@@ -93,17 +92,25 @@ public class FastCollinearPoints {
         return lineSegments.toArray(lines);
     }
 
-    private Point findMinPoint(Point pointA, Point pointB) {
-        if (pointA.compareTo(pointB) < 0) {
+    private Point findMinPoint(Point min, Point pointA, Point pointB) {
+        if ((min.compareTo(pointA) < 0) && (min.compareTo(pointB) < 0)) {
+            return min;
+        }
+        if ((pointA.compareTo(min) < 0) && (pointA.compareTo(pointB) < 0)) {
             return pointA;
         }
+
         return pointB;
     }
 
-    private Point findMaxPoint(Point pointA, Point pointB) {
-        if (pointA.compareTo(pointB) > 0) {
+    private Point findMaxPoint(Point max, Point pointA, Point pointB) {
+        if ((max.compareTo(pointA) > 0) && (max.compareTo(pointB) > 0)) {
+            return max;
+        }
+        if ((pointA.compareTo(max) > 0) && (pointA.compareTo(pointB) > 0)) {
             return pointA;
         }
+
         return pointB;
     }
 
