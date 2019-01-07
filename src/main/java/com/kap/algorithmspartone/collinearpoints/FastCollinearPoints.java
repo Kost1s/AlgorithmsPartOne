@@ -65,10 +65,7 @@ public class FastCollinearPoints {
             maxPoint = point;
             for (int i = 2; i < pointsToSort.length; i++) {
                 if (Double.compare(point.slopeTo(pointsToSort[i - 1]), point.slopeTo(pointsToSort[i])) == 0) {
-                    if (collinearPoints == 0) {
-                        collinearPoints = 2;
-                    }
-                    collinearPoints++;
+                    collinearPoints = collinearPointsNo(collinearPoints);
                     minPoint = findMinPoint(minPoint, pointsToSort[i - 1], pointsToSort[i]);
                     maxPoint = findMaxPoint(maxPoint, pointsToSort[i - 1], pointsToSort[i]);
                 } else if ((collinearPoints > 3) && (point.compareTo(minPoint) == 0)) {
@@ -90,6 +87,14 @@ public class FastCollinearPoints {
 
         LineSegment[] lines = new LineSegment[lineSegments.size()];
         return lineSegments.toArray(lines);
+    }
+
+    private int collinearPointsNo(int points) {
+        if (points == 0) {
+            points = 2;
+        }
+        points++;
+        return points;
     }
 
     private Point findMinPoint(Point min, Point pointA, Point pointB) {
