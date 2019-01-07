@@ -89,12 +89,12 @@ public class FastCollinearPoints {
         return lineSegments.toArray(lines);
     }
 
-    private int collinearPointsNo(int points) {
-        if (points == 0) {
-            points = 2;
+    private int collinearPointsNo(int pointsNo) {
+        if (pointsNo == 0) {
+            pointsNo = 2;
         }
-        points++;
-        return points;
+        pointsNo++;
+        return pointsNo;
     }
 
     private Point findMinPoint(Point min, Point pointA, Point pointB) {
