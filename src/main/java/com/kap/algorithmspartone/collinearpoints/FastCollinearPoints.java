@@ -99,7 +99,6 @@ public class FastCollinearPoints {
         if ((pointA.compareTo(min) < 0) && (pointA.compareTo(pointB) < 0)) {
             return pointA;
         }
-
         return pointB;
     }
 
@@ -110,7 +109,6 @@ public class FastCollinearPoints {
         if ((pointA.compareTo(max) > 0) && (pointA.compareTo(pointB) > 0)) {
             return pointA;
         }
-
         return pointB;
     }
 
