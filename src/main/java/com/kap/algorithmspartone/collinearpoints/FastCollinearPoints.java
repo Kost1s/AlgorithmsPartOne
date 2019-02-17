@@ -89,6 +89,15 @@ public class FastCollinearPoints {
         return lineSegments.toArray(lines);
     }
 
+    /**
+     * Collinear points counter.
+     * <p>
+     * Checks whether the counting sequence is in its start or not and acts accordingly.
+     *
+     * @param pointsNo number of collinear points found
+     *
+     * @return cumulative number of collinear points found after each iteration
+     */
     private int collinearPointsNo(int pointsNo) {
         if (pointsNo == 0) {
             pointsNo = 2;
@@ -97,6 +106,15 @@ public class FastCollinearPoints {
         return pointsNo;
     }
 
+    /**
+     * Finds the minimum point from a group of points provided given a minimum reference point.
+     *
+     * @param min    minimum reference point
+     * @param pointA first point to be checked
+     * @param pointB second point to be checked
+     *
+     * @return the minimum point from the group of points provided
+     */
     private Point findMinPoint(Point min, Point pointA, Point pointB) {
         if ((min.compareTo(pointA) <= 0) && (min.compareTo(pointB) <= 0)) {
             return min;
@@ -107,6 +125,15 @@ public class FastCollinearPoints {
         return pointB;
     }
 
+    /**
+     * Finds the maximum point from a group of points provided given a maximum reference point.
+     *
+     * @param max    maximum reference point
+     * @param pointA first point to be checked
+     * @param pointB second point to be checked
+     *
+     * @return the maximum point from the group of points provided
+     */
     private Point findMaxPoint(Point max, Point pointA, Point pointB) {
         if ((max.compareTo(pointA) >= 0) && (max.compareTo(pointB) >= 0)) {
             return max;
