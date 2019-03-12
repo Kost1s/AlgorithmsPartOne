@@ -5,6 +5,8 @@ package com.kap.algorithmspartone.puzzle;
  */
 public class Board {
 
+    private static final int BLANK_BLOCK = 0;
+
     private int[][] blocks;
 
     // construct a board from an n-by-n array of blocks
