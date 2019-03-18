@@ -1,5 +1,7 @@
 package com.kap.algorithmspartone.puzzle;
 
+import java.util.LinkedList;
+
 /**
  * @author Konstantinos Antoniou
  */
@@ -74,7 +76,26 @@ public class Board {
 
     // all neighboring boards
     public Iterable<Board> neighbors() {
+        LinkedList<Board> neighbors = new LinkedList<>();
 
+        int[] blankBlockCoordinates = blankBlockCoordinates();
+        int blankBlockRow = blankBlockCoordinates[0];
+        int blankBlockCol = blankBlockCoordinates[1];
+
+        if (blankBlockRow > 0) {
+            neighbors.add(new Board(exchange(blankBlockRow, blankBlockCol, blankBlockRow - 1, blankBlockCol)));
+        }
+        if (blankBlockRow < (dimension() - 1)) {
+            neighbors.add(new Board(exchange(blankBlockRow, blankBlockCol, blankBlockRow + 1, blankBlockCol)));
+        }
+        if (blankBlockCol > 0) {
+            neighbors.add(new Board(exchange(blankBlockRow, blankBlockCol, blankBlockRow, blankBlockCol - 1)));
+        }
+        if (blankBlockCol < (dimension() - 1)) {
+            neighbors.add(new Board(exchange(blankBlockRow, blankBlockCol, blankBlockRow, blankBlockCol + 1)));
+        }
+
+        return neighbors;
     }
 
     // string representation of this board
@@ -235,6 +256,19 @@ public class Board {
         arrayCopy[rowA][colA] = arrayCopy[rowB][colB];
         arrayCopy[rowB][colB] = temp;
         return arrayCopy;
+    }
+
+    private int[] blankBlockCoordinates() {
+        int[] coordinates = new int[2];
+        for (int row = 0; row < blocks.length; row++) {
+            for (int col = 0; col < blocks.length; col++) {
+                if (isBlankBlock(blocks[row][col])) {
+                    coordinates[0] = row;
+                    coordinates[1] = col;
+                }
+            }
+        }
+        return coordinates;
     }
 
 }
