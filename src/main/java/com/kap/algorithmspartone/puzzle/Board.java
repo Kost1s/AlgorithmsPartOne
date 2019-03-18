@@ -40,7 +40,16 @@ public class Board {
 
     // a board that is obtained by exchanging any pair of blocks
     public Board twin() {
-
+        int row;
+        int col = 0;
+        for (row = 0; row < blocks.length; row++) {
+            for (col = 0; col < (blocks.length - 1); col++) {
+                if (!isBlankBlock(blocks[row][col]) && !isBlankBlock(blocks[row][col + 1])) {
+                    break;
+                }
+            }
+        }
+        return new Board(exchange(row, col, row, col + 1));
     }
 
     public boolean equals(final Object y) {
@@ -88,17 +97,27 @@ public class Board {
 
         hammingValue = 0;
         manhattanValue = 0;
-        int[][] derivedArray = new int[blocks.length][blocks.length];
+        int[][] arrayCopy = new int[blocks.length][blocks.length];
         for (int row = 0; row < blocks.length; row++) {
             for (int col = 0; col < blocks.length; col++) {
-                derivedArray[row][col] = blocks[row][col];
+                arrayCopy[row][col] = blocks[row][col];
                 if (positionOfBlockIsNotCorrect(row, col)) {
                     hammingValue++;
                 }
                 manhattanValue += calculateManhattanDistance(row, col);
             }
         }
-        return derivedArray;
+        return arrayCopy;
+    }
+
+    private int[][] copyArray(int[][] blocks) {
+        int[][] arrayCopy = new int[blocks.length][blocks.length];
+        for (int row = 0; row < blocks.length; row++) {
+            for (int col = 0; col < blocks.length; col++) {
+                arrayCopy[row][col] = blocks[row][col];
+            }
+        }
+        return arrayCopy;
     }
 
     /**
@@ -208,6 +227,14 @@ public class Board {
 
     private int colFrom1dCoordinate(int coordinate) {
         return (coordinate - 1) % dimension();
+    }
+
+    private int[][] exchange(int rowA, int colA, int rowB, int colB) {
+        int[][] arrayCopy = copyArray(blocks);
+        int temp = arrayCopy[rowA][colA];
+        arrayCopy[rowA][colA] = arrayCopy[rowB][colB];
+        arrayCopy[rowB][colB] = temp;
+        return arrayCopy;
     }
 
 }
