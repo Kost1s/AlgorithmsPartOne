@@ -17,7 +17,11 @@ public class Board {
     // construct a board from an n-by-n array of blocks
     // (where blocks[i][j] = block in row i, column j)
     public Board(int[][] blocks) {
-        this.blocks = copyConstructorArgumentAndInitializeFields(blocks);
+        if (blocks == null) {
+            throw new IllegalArgumentException("Constructor argument is null");
+        }
+        this.blocks = copyArray(blocks);
+        initializeFields();
     }
 
     // board dimension n
@@ -44,9 +48,11 @@ public class Board {
     public Board twin() {
         int row;
         int col = 0;
-        for (row = 0; row < blocks.length; row++) {
+        boolean rowLoopFinished = false;
+        for (row = 0; row < blocks.length && !rowLoopFinished; row++) {
             for (col = 0; col < (blocks.length - 1); col++) {
                 if (!isBlankBlock(blocks[row][col]) && !isBlankBlock(blocks[row][col + 1])) {
+                    rowLoopFinished = true;
                     break;
                 }
             }
@@ -111,24 +117,17 @@ public class Board {
         return stringBuilder.toString();
     }
 
-    private int[][] copyConstructorArgumentAndInitializeFields(int[][] blocks) {
-        if (blocks == null) {
-            throw new IllegalArgumentException("Constructor argument is null");
-        }
-
+    private void initializeFields() {
         hammingValue = 0;
         manhattanValue = 0;
-        int[][] arrayCopy = new int[blocks.length][blocks.length];
         for (int row = 0; row < blocks.length; row++) {
             for (int col = 0; col < blocks.length; col++) {
-                arrayCopy[row][col] = blocks[row][col];
                 if (positionOfBlockIsNotCorrect(row, col)) {
                     hammingValue++;
                 }
                 manhattanValue += calculateManhattanDistance(row, col);
             }
         }
-        return arrayCopy;
     }
 
     private int[][] copyArray(int[][] blocks) {
