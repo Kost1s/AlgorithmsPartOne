@@ -4,7 +4,7 @@ import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author Konstantinos Antoniou
@@ -45,9 +45,9 @@ public class Solver {
             return null;
         }
 
-        Stack<Board> moves = new Stack<>();
+        Deque<Board> moves = new ArrayDeque<>();
         while (lastMove != null) {
-            moves.push(lastMove.board);
+            moves.addFirst(lastMove.board);
             lastMove = lastMove.previous;
         }
 
