@@ -9,24 +9,24 @@ public class Board {
 
     private static final int BLANK_BLOCK = 0;
 
-    private final int[][] blocks;
+    private final int[][] blocksBoard;
 
     private int hammingValue;
     private int manhattanValue;
 
-    // construct a board from an n-by-n array of blocks
-    // (where blocks[i][j] = block in row i, column j)
+    // construct a board from an n-by-n array of blocksBoard
+    // (where blocksBoard[i][j] = block in row i, column j)
     public Board(int[][] blocks) {
         if (blocks == null) {
             throw new IllegalArgumentException("Constructor argument is null");
         }
-        this.blocks = copyArray(blocks);
+        blocksBoard = copyArray(blocks);
         initializeFields();
     }
 
     // board dimension n
     public int dimension() {
-        return blocks.length;
+        return blocksBoard.length;
     }
 
     // number of blocks out of place
@@ -49,9 +49,9 @@ public class Board {
         int row;
         int col = 0;
         boolean rowLoopFinished = false;
-        for (row = 0; row < blocks.length && !rowLoopFinished; row++) {
-            for (col = 0; col < (blocks.length - 1); col++) {
-                if (!isBlankBlock(blocks[row][col]) && !isBlankBlock(blocks[row][col + 1])) {
+        for (row = 0; (row < blocksBoard.length) && !rowLoopFinished; row++) {
+            for (col = 0; col < (blocksBoard.length - 1); col++) {
+                if (!isBlankBlock(blocksBoard[row][col]) && !isBlankBlock(blocksBoard[row][col + 1])) {
                     rowLoopFinished = true;
                     break;
                 }
@@ -71,9 +71,11 @@ public class Board {
 
         final Board board = (Board) y;
 
-        for (int row = 0; row < blocks.length; row++) {
-            for (int col = 0; col < blocks.length; col++) {
-                if (board.blocks[row][col] != blocks[row][col]) return false;
+        for (int row = 0; row < blocksBoard.length; row++) {
+            for (int col = 0; col < blocksBoard.length; col++) {
+                if (board.blocksBoard[row][col] != blocksBoard[row][col]) {
+                    return false;
+                }
             }
         }
 
@@ -108,9 +110,9 @@ public class Board {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(dimension()).append("\n");
-        for (int row = 0; row < blocks.length; row++) {
-            for (int col = 0; col < blocks.length; col++) {
-                stringBuilder.append(String.format("%2d ", blocks[row][col]));
+        for (int row = 0; row < blocksBoard.length; row++) {
+            for (int col = 0; col < blocksBoard.length; col++) {
+                stringBuilder.append(String.format("%2d ", blocksBoard[row][col]));
             }
             stringBuilder.append("\n");
         }
@@ -120,8 +122,8 @@ public class Board {
     private void initializeFields() {
         hammingValue = 0;
         manhattanValue = 0;
-        for (int row = 0; row < blocks.length; row++) {
-            for (int col = 0; col < blocks.length; col++) {
+        for (int row = 0; row < blocksBoard.length; row++) {
+            for (int col = 0; col < blocksBoard.length; col++) {
                 if (positionOfBlockIsNotCorrect(row, col)) {
                     hammingValue++;
                 }
@@ -190,13 +192,13 @@ public class Board {
      * @return true if position of block is correct and false otherwise
      */
     private boolean positionOfBlockIsNotCorrect(int row, int col) {
-        int blockValue = blocks[row][col];
+        int blockValue = blocksBoard[row][col];
 
         return !isBlankBlock(blockValue) && (blockValue != correctPositionForBlock(row, col));
     }
 
     private int calculateManhattanDistance(int row, int col) {
-        int blockValue = blocks[row][col];
+        int blockValue = blocksBoard[row][col];
 
         return isBlankBlock(blockValue) ? 0 : (Math.abs(row - rowFrom1dCoordinate(blockValue)) +
                                                Math.abs(col - colFrom1dCoordinate(blockValue)));
@@ -238,8 +240,8 @@ public class Board {
     /**
      * @param coordinate 1d coordinate for which a 2d row coordinate will be derived
      *
-     * @return 2D array (with an index starting from [0][0]) row coordinate derived from an 1D array (with an index starting
-     * from [1]) coordinate
+     * @return 2D array (with an index starting from [0][0]) row coordinate derived from an 1D array (with an index
+     * starting from [1]) coordinate
      */
     private int rowFrom1dCoordinate(int coordinate) {
         return (coordinate - 1) / dimension();
@@ -250,7 +252,7 @@ public class Board {
     }
 
     private int[][] exchange(int rowA, int colA, int rowB, int colB) {
-        int[][] arrayCopy = copyArray(blocks);
+        int[][] arrayCopy = copyArray(blocksBoard);
         int temp = arrayCopy[rowA][colA];
         arrayCopy[rowA][colA] = arrayCopy[rowB][colB];
         arrayCopy[rowB][colB] = temp;
@@ -259,9 +261,9 @@ public class Board {
 
     private int[] blankBlockCoordinates() {
         int[] coordinates = new int[2];
-        for (int row = 0; row < blocks.length; row++) {
-            for (int col = 0; col < blocks.length; col++) {
-                if (isBlankBlock(blocks[row][col])) {
+        for (int row = 0; row < blocksBoard.length; row++) {
+            for (int col = 0; col < blocksBoard.length; col++) {
+                if (isBlankBlock(blocksBoard[row][col])) {
                     coordinates[0] = row;
                     coordinates[1] = col;
                 }
