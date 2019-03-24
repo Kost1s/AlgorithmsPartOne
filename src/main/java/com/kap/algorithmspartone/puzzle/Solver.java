@@ -45,7 +45,7 @@ public class Solver {
             return null;
         }
 
-        Deque<Board> moves = new ArrayDeque<>();
+        ArrayDeque<Board> moves = new ArrayDeque<>();
         while (lastMove != null) {
             moves.addFirst(lastMove.board);
             lastMove = lastMove.previous;
